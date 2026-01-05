@@ -1,0 +1,88 @@
+{
+    // disposition des widgets
+    "chat.commandCenter.enabled": false,
+    "window.menuBarVisibility": "compact",
+    "workbench.activityBar.location": "top",
+    "window.commandCenter": false,
+    // couleurs
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#000",
+        "statusBar.background": "#000",
+        "statusBarItem.remoteBackground": "#222",
+        "titleBar.activeBackground": "#000",
+        "editor.background": "#000",
+        "editorWidget.background": "#111",
+        "panel.background": "#000",
+        "sideBar.background": "#000",
+        "input.background": "#222",
+        "editorGroupHeader.tabsBackground": "#000",
+        "tab.inactiveBackground": "#000",
+        "editorWhitespace.foreground": "#888"
+    },
+    "terminal.integrated.minimumContrastRatio": 2.1,
+    // rendu du texte
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
+    "terminal.integrated.fontLigatures.enabled": true,
+    "editor.renderWhitespace": "trailing",
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorStyleInactive": "line",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorWidth": 2,
+    // écriture
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.inlineSuggest.enabled": true,
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    // disposition du terminal
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.tabs.title": "${process}${separator}${task}",
+    "terminal.integrated.smoothScrolling": true,
+    "terminal.integrated.stickyScroll.maxLineCount": 2,
+    // suggestions du terminal
+    "terminal.integrated.suggest.enabled": true,
+    "terminal.integrated.suggest.quickSuggestions": {
+        "commands": "off",
+        "arguments": "off",
+        "unknown": "off"
+    },
+    "terminal.integrated.suggest.insertTrailingSpace": true,
+    // language-specific
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "files.associations": {
+        "*.css": "tailwindcss",
+        "*.toml": "toml"
+    },
+    // extensions
+    "tailwind-fold.unfoldedTextOpacity": 0.8,
+    "tailwind-fold.autoFold": false,
+    "i18n-ally.sourceLanguage": "fr",
+    "i18n-ally.displayLanguage": "fr",
+    "i18n-ally.translate.deepl.useFreeApiEntry": true,
+    "i18n-ally.keystyle": "nested",
+    "evenBetterToml.formatter.allowedBlankLines": 1,
+    "indentRainbow.excludedLanguages": [],
+    "indentRainbow.colors": [
+        "rgba(0,0,255,0.15)",
+        "rgba(0,255,0,0.15)",
+        "rgba(255,0,0,0.15)",
+        "rgba(0,255,255,0.15)",
+        "rgba(255,0,255,0.15)",
+        "rgba(255,255,0,0.15)"
+    ],
+    "markdown-preview-github-styles.colorTheme": "dark",
+    "markdown-preview-github-styles.darkTheme": "dark_high_contrast",
+    "geminicodeassist.inlineSuggestions.enableAuto": true,
+    "geminicodeassist.displayInlineContextHint": false,
+    "hexeditor.columnWidth": 16,
+    "hexeditor.showDecodedText": true,
+    "hexeditor.defaultEndianness": "little",
+    "hexeditor.inspectorType": "aside"
+}

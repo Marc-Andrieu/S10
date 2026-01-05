@@ -1,0 +1,70 @@
+[
+    {
+        "key": "ctrl+down",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "nextBlankLine"
+        }
+    },
+    {
+        "key": "ctrl+up",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "prevBlankLine"
+        }
+    },
+    {
+        "key": "ctrl+shift+down",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "nextBlankLine",
+            "select": true
+        }
+    },
+    {
+        "key": "ctrl+shift+up",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "prevBlankLine",
+            "select": true
+        }
+    },
+    {
+        "key": "alt+left",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "wrappedLineStart"
+        }
+    },
+    {
+        "key": "alt+right",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "wrappedLineEnd"
+        }
+    },
+    {
+        "key": "alt+shift+left",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "wrappedLineStart",
+            "select": true
+        }
+    },
+    {
+        "key": "alt+shift+right",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "wrappedLineEnd",
+            "select": true
+        }
+    }
+]
