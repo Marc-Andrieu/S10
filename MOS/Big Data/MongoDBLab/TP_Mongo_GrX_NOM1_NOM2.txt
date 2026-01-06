@@ -1,0 +1,235 @@
+Groupe : (1 pour le Groupe de Mr Nowakowski, 2 pour le groupe de Mr. Egyed)
+Nom1 Prénom1 (à remplacer)
+Nom2 Prénom2
+
+
+************************************************************************
+1.	Liste de toutes les stations dont la commune est VILLEURBANNE
+
+db.velov_geo.find({"properties.commune":"VILLEURBANNE"});
+
+_______________________
+result :
+
+/* 1 */
+{
+    "_id" : ObjectId("5ffb675e3aa6507fa7c9aa6d"),
+    "type" : "Feature",
+    "properties" : {
+        "number" : 10043,
+        "name" : "Salengro / 8 mai 1945",
+        "address" : "Face 44, Rue de la Feyssine",
+        "address2" : "",
+        "commune" : "VILLEURBANNE",
+        "nmarrond" : 43,
+        "bonus" : "Non",
+        "pole" : "itinéraires cyclables",
+        "lat" : 45.7830110745979,
+        "lng" : 4.8905858366251,
+        "bike_stands" : 20,
+        "status" : "OPEN",
+        "available_bike_stands" : 17,
+        "available_bikes" : 3,
+        "availabilitycode" : 1,
+        "availability" : "Vert",
+        "banking" : 0,
+        "gid" : 826,
+        "last_update" : "2017/02/02 14:52:42",
+        "last_update_fme" : "2017/02/02 14:54:00"
+    },
+    "geometry" : {
+        "type" : "Point",
+        "coordinates" : [ 
+            4.8905858366251, 
+            45.7830110745979
+        ]
+    }
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("5ffb675e3aa6507fa7c9aa6e"),
+    "type" : "Feature",
+    "properties" : {
+        "number" : 10112,
+        "name" : "Place de la Reconnaissance",
+        "address" : "109 route de Genas",
+        "address2" : "",
+        "commune" : "VILLEURBANNE",
+        "nmarrond" : 112,
+        "bonus" : "Non",
+        "pole" : "MJC, espace public, maillage",
+        "lat" : 45.7545359906761,
+        "lng" : 4.88513867618816,
+        "bike_stands" : 32,
+        "status" : "OPEN",
+        "available_bike_stands" : 32,
+        "available_bikes" : 0,
+        "availabilitycode" : 3,
+        "availability" : "Orange",
+        "banking" : 0,
+        "gid" : 972,
+        "last_update" : "2017/02/02 14:49:57",
+        "last_update_fme" : "2017/02/02 14:54:00"
+    },
+    "geometry" : {
+        "type" : "Point",
+        "coordinates" : [ 
+            4.88513867618816, 
+            45.7545359906761
+        ]
+    }
+}
+...
+
+
+************************************************************************
+1.	List all stations located in the city of VILLEURBANNE.
+
+_______________________
+result :
+
+************************************************************************
+2.	List all stations not located in VILLEURBANNE.
+
+_______________________
+result :
+
+************************************************************************
+3.	List all stations that do not have a second address (address2 is empty).
+
+_______________________
+result :
+
+************************************************************************
+4.	Count the number of stations where the second address has a value.
+
+_______________________
+result :
+
+************************************************************************
+5.	List stations with more than 2 bikes available (available_bikes).
+
+_______________________
+result :
+
+************************************************************************
+6.	List all distinct cities (communes).
+
+_______________________
+result :
+
+************************************************************************
+7.	Find stations that are in VILLEURBANNE or VENISSIEUX and have more than 2 available bikes 
+
+_______________________
+result :
+
+************************************************************************
+8.	List all distinct cities, sorted in alphabetical order.
+
+_______________________
+result :
+
+************************************************************************
+9.	List stations in the 9th arrondissement (Lyon 9ème) in ascending order of available bikes.
+
+_______________________
+result :
+
+************************************************************************
+10.	Project results of the previous question onto the station name, address, and number of available bikes.
+
+_______________________
+result :
+
+************************************************************************
+11.	Display cities and the number of Vélo’V stations in each commune.
+
+_______________________
+result :
+
+************************************************************************
+12.	Sort the results by commune.
+
+_______________________
+result :
+
+************************************************************************
+13.	Sort the results by the number of stations in descending order.
+
+_______________________
+result :
+
+************************************************************************
+14.	Count the number of Vélo’V stations in VILLEURBANNE, grouped by the number of available bikes, sorted by this number.
+
+_______________________
+result :
+
+************************************************************************
+15.	Add to the previous result the names of stations for each number of available bikes.
+
+_______________________
+result :
+
+************************************************************************
+16.	Calculate the average number of available bikes per city.
+
+_______________________
+result :
+
+************************************************************************
+17.	Create a new collection called “simple_velov” that contains the content of the “properties” field directly at the root level of each document. 
+_______________________
+result :
+
+************************************************************************
+18.	Find Vélo’V Stations Within 500m of the Point : 
+$geometry: { type: "Point",  coordinates: [ 4.863132722360224, 45.77022676914935 ] } 
+(use : $near)
+
+_______________________
+result :
+
+************************************************************************
+19.		List the 5 Closest Stations to Specific Coordinates : 
+"Point",  coordinates: [ 4.863132722360224, 45.77022676914935 ] } 
+(use : geoNear)
+
+_______________________
+result :
+
+************************************************************************
+20.	Find velov stations with the address containing: "Europe".
+
+_______________________
+result :
+
+************************************************************************
+21. Add Two New Vélo’V Stations to the Database
+
+_______________________
+result :
+
+************************************************************************
+21.	Data enrichment 
+Look for downloadable data in JSON format on the website https://data.grandlyon.com/ (or elsewhere) that can complement the information of Vélo’V stations.
+
+a)	Provide the URL that allows you to download the data and explain how you think it can complement the MongoDB collection of Vélo’V stations.
+
+b)	Download the data and import it into MongoDB, simplify it to have more than one document. Describe your procedure.
+
+
+c)	Provide at least 3 MongoDB queries that combine the new information with the old data: 
+    1 that involves matching addresses (properties.address, properties.nom, … check the fields), 
+    
+    another that implies geographic coordinate comparison. 
+    
+    For the additional queries use your imagination.
+     
+Describe your method. Provide: query, results and explanation. 
+ 
+
+
+
