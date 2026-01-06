@@ -1,0 +1,633 @@
+Groupe : 2
+Coste Hugo
+Andrieu Marc
+
+
+************************************************************************
+1.	List all stations located in the city of VILLEURBANNE.
+
+db.velov_geo.find({ "properties.commune": "VILLEURBANNE" });
+
+_______________________
+result :
+
+[
+  {
+    "_id": {
+      "$oid": "695d11908adfd9c44f1f0e7c"
+    },
+    "type": "Feature",
+    "properties": {
+      "number": 10112,
+      "name": "Place de la Reconnaissance",
+      "address": "109 route de Genas",
+      "address2": "",
+      "commune": "VILLEURBANNE",
+      "nmarrond": 112,
+      "bonus": "Non",
+      "pole": "MJC, espace public, maillage",
+      "lat": 45.7545359906761,
+      "lng": 4.88513867618816,
+      "bike_stands": 32,
+      "status": "OPEN",
+      "available_bike_stands": 32,
+      "available_bikes": 0,
+      "availabilitycode": 3,
+      "availability": "Orange",
+      "banking": 0,
+      "gid": 972,
+      "last_update": "2017/02/02 14:49:57",
+      "last_update_fme": "2017/02/02 14:54:00"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        4.88513867618816,
+        45.75453599067611
+      ]
+    }
+  },
+  ...
+]
+
+************************************************************************
+2.	List all stations not located in VILLEURBANNE.
+
+db.velov_geo.find({ "properties.commune": {$ne: "VILLEURBANNE"} });
+
+_______________________
+result :
+
+[
+  {
+    "_id": {
+      "$oid": "695d11908adfd9c44f1f0e7d"
+    },
+    "type": "Feature",
+    "properties": {
+      "number": 2023,
+      "name": "Hugo / Ste Hélène",
+      "address": "Rue Sainte Hélène",
+      "address2": "Entre rue Victor Hugi et rue d'Auvergne",
+      "commune": "Lyon 2 ème",
+      "nmarrond": 23,
+      "bonus": "Non",
+      "pole": "commerces",
+      "lat": 45.7546761673686,
+      "lng": 4.82989232819922,
+      "bike_stands": 20,
+      "status": "OPEN",
+      "available_bike_stands": 6,
+      "available_bikes": 13,
+      "availabilitycode": 1,
+      "availability": "Vert",
+      "banking": 0,
+      "gid": 848,
+      "last_update": "2017/02/02 14:49:24",
+      "last_update_fme": "2017/02/02 14:54:00"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        4.829892328199222,
+        45.754676167368594
+      ]
+    }
+  },
+  ...
+]
+
+************************************************************************
+3.	List all stations that do not have a second address (address2 is empty).
+
+db.velov_geo.find({ "properties.address2": "" });
+
+_______________________
+result :
+
+[
+  {
+    "_id": {
+      "$oid": "695d11908adfd9c44f1f0e7c"
+    },
+    "type": "Feature",
+    "properties": {
+      "number": 10112,
+      "name": "Place de la Reconnaissance",
+      "address": "109 route de Genas",
+      "address2": "",
+      "commune": "VILLEURBANNE",
+      "nmarrond": 112,
+      "bonus": "Non",
+      "pole": "MJC, espace public, maillage",
+      "lat": 45.7545359906761,
+      "lng": 4.88513867618816,
+      "bike_stands": 32,
+      "status": "OPEN",
+      "available_bike_stands": 32,
+      "available_bikes": 0,
+      "availabilitycode": 3,
+      "availability": "Orange",
+      "banking": 0,
+      "gid": 972,
+      "last_update": "2017/02/02 14:49:57",
+      "last_update_fme": "2017/02/02 14:54:00"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        4.88513867618816,
+        45.75453599067611
+      ]
+    }
+  },
+  ...
+]
+
+
+************************************************************************
+4.	Count the number of stations where the second address has a value.
+
+db.velov_geo.find({ "properties.address2": {$ne: ""} }).count();
+
+_______________________
+result :
+
+163
+
+************************************************************************
+5.	List stations with more than 2 bikes available (available_bikes).
+
+db.velov_geo.find({ "properties.available_bikes": { $gt: 2 } });
+
+_______________________
+result :
+
+[
+  {
+    "_id": {
+      "$oid": "695d11908adfd9c44f1f0e7d"
+    },
+    "type": "Feature",
+    "properties": {
+      "number": 2023,
+      "name": "Hugo / Ste Hélène",
+      "address": "Rue Sainte Hélène",
+      "address2": "Entre rue Victor Hugi et rue d'Auvergne",
+      "commune": "Lyon 2 ème",
+      "nmarrond": 23,
+      "bonus": "Non",
+      "pole": "commerces",
+      "lat": 45.7546761673686,
+      "lng": 4.82989232819922,
+      "bike_stands": 20,
+      "status": "OPEN",
+      "available_bike_stands": 6,
+      "available_bikes": 13,
+      "availabilitycode": 1,
+      "availability": "Vert",
+      "banking": 0,
+      "gid": 848,
+      "last_update": "2017/02/02 14:49:24",
+      "last_update_fme": "2017/02/02 14:54:00"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        4.829892328199222,
+        45.754676167368594
+      ]
+    }
+  },
+  ...
+]
+
+************************************************************************
+6.	List all distinct cities (communes).
+
+db.velov_geo.distinct("properties.commune");
+
+_______________________
+result :
+
+[
+  "CALUIRE-ET-CUIRE",
+  "Lyon 1 er",
+  "Lyon 2 ème",
+  "Lyon 3 ème",
+  "Lyon 4 ème",
+  "Lyon 5 ème",
+  "Lyon 6 ème",
+  "Lyon 7 ème",
+  "Lyon 8 ème",
+  "Lyon 9 ème",
+  "VAULX-EN-VELIN",
+  "VENISSIEUX",
+  "VILLEURBANNE"
+]
+
+************************************************************************
+7.	Find stations that are in VILLEURBANNE or VENISSIEUX and have more than 2 available bikes 
+
+db.velov_geo.find({
+  $and: [
+    {
+      $or: [
+        { "properties.commune": "VILLEURBANNE" },
+        { "properties.commune": "VENISSIEUX" },
+      ],
+    },
+    { "properties.available_bikes": { $gt: 2 } },
+  ],
+});
+
+_______________________
+result :
+
+[
+  {
+    "_id": {
+      "$oid": "695d11908adfd9c44f1f0e8a"
+    },
+    "type": "Feature",
+    "properties": {
+      "number": 8051,
+      "name": "Hôpital St-Jean de Dieu",
+      "address": "313 route de Vienne",
+      "address2": "",
+      "commune": "VENISSIEUX",
+      "nmarrond": 51,
+      "bonus": "Non",
+      "pole": "Hôpital Saint Jean de Dieu, logement colllectif",
+      "lat": 45.7242705028889,
+      "lng": 4.85415212712752,
+      "bike_stands": 20,
+      "status": "OPEN",
+      "available_bike_stands": 15,
+      "available_bikes": 5,
+      "availabilitycode": 1,
+      "availability": "Vert",
+      "banking": 0,
+      "gid": 785,
+      "last_update": "2017/02/02 14:46:29",
+      "last_update_fme": "2017/02/02 14:54:00"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        4.854152127127522,
+        45.72427050288891
+      ]
+    }
+  },
+  ...
+]
+
+************************************************************************
+8.	List all distinct cities, sorted in alphabetical order.
+
+A la question 6, les villes étaient déjà par défaut triées par ordre alphabétique.
+On peut quand même préciser un "sort"
+
+db.velov_geo.distinct("properties.commune").sort();
+
+_______________________
+result :
+
+[
+  "CALUIRE-ET-CUIRE",
+  "Lyon 1 er",
+  "Lyon 2 ème",
+  "Lyon 3 ème",
+  "Lyon 4 ème",
+  "Lyon 5 ème",
+  "Lyon 6 ème",
+  "Lyon 7 ème",
+  "Lyon 8 ème",
+  "Lyon 9 ème",
+  "VAULX-EN-VELIN",
+  "VENISSIEUX",
+  "VILLEURBANNE"
+]
+
+************************************************************************
+9.	List stations in the 9th arrondissement (Lyon 9ème) in ascending order of available bikes.
+
+db.velov_geo.find({ "properties.commune": "Lyon 9 ème" }).sort( {"properties.available_bikes": 1} );
+
+_______________________
+result :
+
+[
+  {
+    "_id": {
+      "$oid": "695d11908adfd9c44f1f0f46"
+    },
+    "type": "Feature",
+    "properties": {
+      "number": 9051,
+      "name": "Andréi Sakharov",
+      "address": "301 avenue A.Sakharov",
+      "address2": "",
+      "commune": "Lyon 9 ème",
+      "nmarrond": 51,
+      "bonus": "Oui",
+      "pole": "Stade, lycée",
+      "lat": 45.7865247393491,
+      "lng": 4.79707090233101,
+      "bike_stands": 24,
+      "status": "OPEN",
+      "available_bike_stands": 12,
+      "available_bikes": 0,
+      "availabilitycode": 3,
+      "availability": "Orange",
+      "banking": 0,
+      "gid": 989,
+      "last_update": "2017/02/02 14:47:17",
+      "last_update_fme": "2017/02/02 14:54:00"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        4.797070902331011,
+        45.78652473934913
+      ]
+    }
+  },
+  ...
+]
+
+************************************************************************
+10.	Project results of the previous question onto the station name, address, and number of available bikes.
+
+db.velov_geo.find(
+    { "properties.commune": "Lyon 9 ème" },
+    {
+        "properties.name": 1,
+        "properties.address": 1,
+        "properties.available_bikes": 1
+    }
+).sort({ "properties.available_bikes": 1 });
+
+_______________________
+result :
+
+[
+  {
+    "_id": {
+      "$oid": "695d11908adfd9c44f1f0f46"
+    },
+    "properties": {
+      "name": "Andréi Sakharov",
+      "address": "301 avenue A.Sakharov",
+      "available_bikes": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "695d11908adfd9c44f1f0f86"
+    },
+    "properties": {
+      "name": "Le Château",
+      "address": "228 avenue du Plateau",
+      "available_bikes": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "695d11908adfd9c44f1f0f92"
+    },
+    "properties": {
+      "name": "Balmont",
+      "address": "332 bd de Balmont",
+      "available_bikes": 0
+    }
+  },
+  ...
+]
+
+************************************************************************
+11.	Display cities and the number of Vélo’V stations in each commune.
+
+db.velov_geo.aggregate([
+    {
+        $group: {
+            _id: "$properties.commune",
+            count: { $sum: 1 },
+        },
+    }
+]);
+
+_______________________
+result :
+
+[
+  {
+    "_id": "Lyon 9 ème",
+    "count": 23
+  },
+  {
+    "_id": "Lyon 3 ème",
+    "count": 50
+  },
+  {
+    "_id": "Lyon 2 ème",
+    "count": 32
+  },
+  {
+    "_id": "VILLEURBANNE",
+    "count": 73
+  },
+  {
+    "_id": "Lyon 8 ème",
+    "count": 34
+  },
+  {
+    "_id": "CALUIRE-ET-CUIRE",
+    "count": 3
+  },
+  {
+    "_id": "Lyon 6 ème",
+    "count": 28
+  },
+  {
+    "_id": "Lyon 7 ème",
+    "count": 40
+  },
+  ...
+]
+
+************************************************************************
+12.	Sort the results by commune.
+
+db.velov_geo.aggregate([
+    {
+        $group: {
+            _id: "$properties.commune",
+            count: { $sum: 1 },
+        },
+    }
+]).sort({ _id: 1});
+
+_______________________
+result :
+
+[
+  {
+    "_id": "CALUIRE-ET-CUIRE",
+    "count": 3
+  },
+  {
+    "_id": "Lyon 1 er",
+    "count": 18
+  },
+  {
+    "_id": "Lyon 2 ème",
+    "count": 32
+  },
+  {
+    "_id": "Lyon 3 ème",
+    "count": 50
+  },
+  {
+    "_id": "Lyon 4 ème",
+    "count": 20
+  },
+  {
+    "_id": "Lyon 5 ème",
+    "count": 24
+  },
+  {
+    "_id": "Lyon 6 ème",
+    "count": 28
+  },
+  {
+    "_id": "Lyon 7 ème",
+    "count": 40
+  },
+  ...
+]
+
+************************************************************************
+13.	Sort the results by the number of stations in descending order.
+
+db.velov_geo.aggregate([
+    {
+        $group: {
+            _id: "$properties.commune",
+            "stations": { $sum: 1 },
+        },
+    }
+]).sort({ "stations": -1 });
+
+_______________________
+result :
+
+[
+  {
+    "_id": "VILLEURBANNE",
+    "stations": 73
+  },
+  {
+    "_id": "Lyon 3 ème",
+    "stations": 50
+  },
+  {
+    "_id": "Lyon 7 ème",
+    "stations": 40
+  },
+  {
+    "_id": "Lyon 8 ème",
+    "stations": 34
+  },
+  {
+    "_id": "Lyon 2 ème",
+    "stations": 32
+  },
+  {
+    "_id": "Lyon 6 ème",
+    "stations": 28
+  },
+  {
+    "_id": "Lyon 5 ème",
+    "stations": 24
+  },
+  {
+    "_id": "Lyon 9 ème",
+    "stations": 23
+  },
+  ...
+]
+
+************************************************************************
+14.	Count the number of Vélo’V stations in VILLEURBANNE, grouped by the number of available bikes, sorted by this number.
+
+_______________________
+result :
+
+************************************************************************
+15.	Add to the previous result the names of stations for each number of available bikes.
+
+_______________________
+result :
+
+************************************************************************
+16.	Calculate the average number of available bikes per city.
+
+_______________________
+result :
+
+************************************************************************
+17.	Create a new collection called “simple_velov” that contains the content of the “properties” field directly at the root level of each document. 
+_______________________
+result :
+
+************************************************************************
+18.	Find Vélo’V Stations Within 500m of the Point : 
+$geometry: { type: "Point",  coordinates: [ 4.863132722360224, 45.77022676914935 ] } 
+(use : $near)
+
+_______________________
+result :
+
+************************************************************************
+19.		List the 5 Closest Stations to Specific Coordinates : 
+"Point",  coordinates: [ 4.863132722360224, 45.77022676914935 ] } 
+(use : geoNear)
+
+_______________________
+result :
+
+************************************************************************
+20.	Find velov stations with the address containing: "Europe".
+
+_______________________
+result :
+
+************************************************************************
+21. Add Two New Vélo’V Stations to the Database
+
+_______________________
+result :
+
+************************************************************************
+21.	Data enrichment 
+Look for downloadable data in JSON format on the website https://data.grandlyon.com/ (or elsewhere) that can complement the information of Vélo’V stations.
+
+a)	Provide the URL that allows you to download the data and explain how you think it can complement the MongoDB collection of Vélo’V stations.
+
+b)	Download the data and import it into MongoDB, simplify it to have more than one document. Describe your procedure.
+
+
+c)	Provide at least 3 MongoDB queries that combine the new information with the old data: 
+    1 that involves matching addresses (properties.address, properties.nom, … check the fields), 
+    
+    another that implies geographic coordinate comparison. 
+    
+    For the additional queries use your imagination.
+     
+Describe your method. Provide: query, results and explanation. 
+ 
+
+
+
