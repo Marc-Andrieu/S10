@@ -1,0 +1,20 @@
+[
+    {
+        "properties": {
+            "name": "Vaux-village",
+            "lat": 45.786075,
+            "lng": 4.926964,
+            "available_bikes": 18,
+            "available_bike_stands": 0
+        }
+    },
+    {
+        "properties": {
+            "name": "Chassieu-Genas",
+            "lat": 45.738238,
+            "lng": 4.969414,
+            "available_bikes": 8,
+            "available_bike_stands": 4
+        }
+    }
+]

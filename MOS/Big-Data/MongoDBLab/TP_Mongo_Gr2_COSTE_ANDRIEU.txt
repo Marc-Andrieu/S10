@@ -53,7 +53,7 @@ result :
 ************************************************************************
 2.	List all stations not located in VILLEURBANNE.
 
-db.velov_geo.find({ "properties.commune": {$ne: "VILLEURBANNE"} });
+db.velov_geo.find({ "properties.commune": { $ne: "VILLEURBANNE" } });
 
 _______________________
 result :
@@ -148,7 +148,11 @@ result :
 ************************************************************************
 4.	Count the number of stations where the second address has a value.
 
-db.velov_geo.find({ "properties.address2": {$ne: ""} }).count();
+db.velov_geo.find({ "properties.address2": { $ne: "" } }).count();
+
+Alternative :
+
+db.velov_geo.countDocuments({ "properties.address2": { $ne: "" } });
 
 _______________________
 result :
@@ -228,6 +232,13 @@ result :
 
 ************************************************************************
 7.	Find stations that are in VILLEURBANNE or VENISSIEUX and have more than 2 available bikes 
+
+db.velov_geo.find({
+  "properties.commune": { $in: ["VILLEURBANNE", "VENISSIEUX"] },
+  "properties.available_bikes": { $gt: 2 },
+});
+
+Alternative plus verbeuse and $and et $or :
 
 db.velov_geo.find({
   $and: [
@@ -313,7 +324,9 @@ result :
 ************************************************************************
 9.	List stations in the 9th arrondissement (Lyon 9ème) in ascending order of available bikes.
 
-db.velov_geo.find({ "properties.commune": "Lyon 9 ème" }).sort( {"properties.available_bikes": 1} );
+db.velov_geo
+  .find({ "properties.commune": "Lyon 9 ème" })
+  .sort({ "properties.available_bikes": 1 });
 
 _______________________
 result :
@@ -360,14 +373,17 @@ result :
 ************************************************************************
 10.	Project results of the previous question onto the station name, address, and number of available bikes.
 
-db.velov_geo.find(
+db.velov_geo
+  .find(
     { "properties.commune": "Lyon 9 ème" },
     {
-        "properties.name": 1,
-        "properties.address": 1,
-        "properties.available_bikes": 1
+      "properties.name": 1,
+      "properties.address": 1,
+      "properties.available_bikes": 1,
+      _id: 0,
     }
-).sort({ "properties.available_bikes": 1 });
+  )
+  .sort({ "properties.available_bikes": 1 });
 
 _______________________
 result :
@@ -410,12 +426,12 @@ result :
 11.	Display cities and the number of Vélo’V stations in each commune.
 
 db.velov_geo.aggregate([
-    {
-        $group: {
-            _id: "$properties.commune",
-            count: { $sum: 1 },
-        },
-    }
+  {
+    $group: {
+      _id: "$properties.commune",
+      nb_stations: { $sum: 1 },
+    },
+  },
 ]);
 
 _______________________
@@ -424,35 +440,35 @@ result :
 [
   {
     "_id": "Lyon 9 ème",
-    "count": 23
+    "nb_stations": 23
   },
   {
     "_id": "Lyon 3 ème",
-    "count": 50
+    "nb_stations": 50
   },
   {
     "_id": "Lyon 2 ème",
-    "count": 32
+    "nb_stations": 32
   },
   {
     "_id": "VILLEURBANNE",
-    "count": 73
+    "nb_stations": 73
   },
   {
     "_id": "Lyon 8 ème",
-    "count": 34
+    "nb_stations": 34
   },
   {
     "_id": "CALUIRE-ET-CUIRE",
-    "count": 3
+    "nb_stations": 3
   },
   {
     "_id": "Lyon 6 ème",
-    "count": 28
+    "nb_stations": 28
   },
   {
     "_id": "Lyon 7 ème",
-    "count": 40
+    "nb_stations": 40
   },
   ...
 ]
@@ -461,13 +477,18 @@ result :
 12.	Sort the results by commune.
 
 db.velov_geo.aggregate([
-    {
-        $group: {
-            _id: "$properties.commune",
-            count: { $sum: 1 },
-        },
-    }
-]).sort({ _id: 1});
+  {
+    $group: {
+      _id: "$properties.commune",
+      nb_stations: { $sum: 1 },
+    },
+  },
+  {
+    $sort: {
+      _id: 1,
+    },
+  },
+]);
 
 _______________________
 result :
@@ -475,35 +496,35 @@ result :
 [
   {
     "_id": "CALUIRE-ET-CUIRE",
-    "count": 3
+    "nb_stations": 3
   },
   {
     "_id": "Lyon 1 er",
-    "count": 18
+    "nb_stations": 18
   },
   {
     "_id": "Lyon 2 ème",
-    "count": 32
+    "nb_stations": 32
   },
   {
     "_id": "Lyon 3 ème",
-    "count": 50
+    "nb_stations": 50
   },
   {
     "_id": "Lyon 4 ème",
-    "count": 20
+    "nb_stations": 20
   },
   {
     "_id": "Lyon 5 ème",
-    "count": 24
+    "nb_stations": 24
   },
   {
     "_id": "Lyon 6 ème",
-    "count": 28
+    "nb_stations": 28
   },
   {
     "_id": "Lyon 7 ème",
-    "count": 40
+    "nb_stations": 40
   },
   ...
 ]
@@ -512,13 +533,18 @@ result :
 13.	Sort the results by the number of stations in descending order.
 
 db.velov_geo.aggregate([
-    {
-        $group: {
-            _id: "$properties.commune",
-            "stations": { $sum: 1 },
-        },
-    }
-]).sort({ "stations": -1 });
+  {
+    $group: {
+      _id: "$properties.commune",
+      nb_stations: { $sum: 1 },
+    },
+  },
+  {
+    $sort: {
+      nb_stations: -1,
+    },
+  },
+]);
 
 _______________________
 result :
@@ -526,35 +552,35 @@ result :
 [
   {
     "_id": "VILLEURBANNE",
-    "stations": 73
+    "nb_stations": 73
   },
   {
     "_id": "Lyon 3 ème",
-    "stations": 50
+    "nb_stations": 50
   },
   {
     "_id": "Lyon 7 ème",
-    "stations": 40
+    "nb_stations": 40
   },
   {
     "_id": "Lyon 8 ème",
-    "stations": 34
+    "nb_stations": 34
   },
   {
     "_id": "Lyon 2 ème",
-    "stations": 32
+    "nb_stations": 32
   },
   {
     "_id": "Lyon 6 ème",
-    "stations": 28
+    "nb_stations": 28
   },
   {
     "_id": "Lyon 5 ème",
-    "stations": 24
+    "nb_stations": 24
   },
   {
     "_id": "Lyon 9 ème",
-    "stations": 23
+    "nb_stations": 23
   },
   ...
 ]
@@ -563,14 +589,14 @@ result :
 14.	Count the number of Vélo’V stations in VILLEURBANNE, grouped by the number of available bikes, sorted by this number.
 
 db.velov_geo.aggregate([
-    { $match: { "properties.commune": "VILLEURBANNE" } },
-    {
-        $group: {
-        _id: "$properties.available_bikes",
-        "available_bikes": { $sum: 1 },
-        },
+  { $match: { "properties.commune": "VILLEURBANNE" } },
+  {
+    $group: {
+      _id: "$properties.available_bikes",
+      nb_stations: { $sum: 1 },
     },
-    { $sort: {"available_bikes": -1} }
+  },
+  { $sort: { _id: 1 } },
 ]);
 
 _______________________
@@ -578,36 +604,36 @@ result :
 
 [
   {
-    "_id": 0,
-    "available_bikes": 13
+  	"_id": 0,
+    "nb_stations": 13
+   },
+  {
+  	"_id": 1,
+    "nb_stations": 4
+   },
+  {
+  	"_id": 2,
+    "nb_stations": 8
+   },
+  {
+  	"_id": 3,
+    "nb_stations": 3
   },
   {
-    "_id": 2,
-    "available_bikes": 8
+  	"_id": 4,
+    "nb_stations": 3
   },
   {
-    "_id": 6,
-    "available_bikes": 5
+  	"_id": 5,
+    "nb_stations": 3
   },
   {
-    "_id": 1,
-    "available_bikes": 4
-  },
+  	"_id": 6,
+    "nb_stations": 5
+   },
   {
-    "_id": 14,
-    "available_bikes": 4
-  },
-  {
-    "_id": 7,
-    "available_bikes": 4
-  },
-  {
-    "_id": 17,
-    "available_bikes": 3
-  },
-  {
-    "_id": 11,
-    "available_bikes": 3
+  	"_id": 7,
+    "nb_stations": 4
   },
   ...
 ]
@@ -616,15 +642,15 @@ result :
 15.	Add to the previous result the names of stations for each number of available bikes.
 
 db.velov_geo.aggregate([
-    { $match: { "properties.commune": "VILLEURBANNE" } },
-    {
-        $group: {
-        _id: "$properties.available_bikes",
-        "available_bikes": { $sum: 1 },
-        "stations": { $push: "$properties.name" }
-        },
+  { $match: { "properties.commune": "VILLEURBANNE" } },
+  {
+    $group: {
+      _id: "$properties.available_bikes",
+      nb_stations: { $sum: 1 },
+      stations: { $push: "$properties.name" },
     },
-    { $sort: {"available_bikes": -1} }
+  },
+  { $sort: { _id: 1 } },
 ]);
 
 _______________________
@@ -633,17 +659,17 @@ result :
 [
   {
     "_id": 0,
-    "available_bikes": 13,
+    "nb_stations": 13,
     "stations": [
       "Place de la Reconnaissance",
       "Nouveau Musée D'Art Contemporain",
-      "Mémoire & Société",
       "Château Gaillard / Filature",
       "Gare Laurent Bonnevay",
       "Cusset / Voyant",
       "Parc du Centre",
-      "Lycée Marie Curie",
       "Boiron Grangé",
+      "Mémoire & Société",
+      "Lycée Marie Curie",
       "Pressensé / Bienvenus",
       "Saint Exupéry",
       "GrandClément",
@@ -651,17 +677,13 @@ result :
     ]
   },
   {
-    "_id": 2,
-    "available_bikes": 8,
-    "stations": [
-      "Charmettes / Zola",
-      "MJC",
-      "Saint Jean",
-      "Zola / Passage Rey",
-      "Condorcet / Piaton",
-      "Perrin/Jean Jaurès",
-      "La Pérralière",
-      "Croix Luizet"
+    "_id": 1,
+    "nb_stations": 4,
+    stations: [
+      "Maisons Neuves",
+      "Salengro / Vaillant",
+      "Tolstoï / Verlaine",
+      "Préssensé / 8 mai 1945"
     ]
   },
   ...
@@ -671,12 +693,12 @@ result :
 16.	Calculate the average number of available bikes per city.
 
 db.velov_geo.aggregate([
-    {
-        $group: {
-        _id: "$properties.commune",
-        "available_bikes": { $avg: "$properties.available_bikes" },
-        },
+  {
+    $group: {
+      _id: "$properties.commune",
+      available_bikes: { $avg: "$properties.available_bikes" },
     },
+  },
 ]);
 
 _______________________
@@ -722,12 +744,12 @@ result :
 17.	Create a new collection called “simple_velov” that contains the content of the “properties” field directly at the root level of each document. 
 
 db.velov_geo.aggregate([
-    {
-        $replaceRoot: {
-            newRoot: "$properties"
-        }
+  {
+    $replaceRoot: {
+      newRoot: "$properties",
     },
-    { $out: "simple_velov" }
+  },
+  { $out: "simple_velov" },
 ]);
 db.simple_velov.find();
 
@@ -793,6 +815,12 @@ result :
 $geometry: { type: "Point",  coordinates: [ 4.863132722360224, 45.77022676914935 ] } 
 (use : $near)
 
+En premier lieu, exécuter:
+
+db.velov_geo.createIndex({ geometry: "2dsphere" });
+
+Puis :
+
 db.velov_geo.find({
   "geometry.coordinates": {
     $near: {
@@ -852,12 +880,18 @@ result :
 "Point",  coordinates: [ 4.863132722360224, 45.77022676914935 ] } 
 (use : geoNear)
 
-db.velov_geo.find({
-    "geometry.coordinates": { $geoNear: { $geometry: {
-        type: "Point",
-        coordinates: [4.863132722360224, 45.77022676914935],
-    }}}
-}).limit(5);
+db.velov_geo
+  .find({
+    "geometry.coordinates": {
+      $geoNear: {
+        $geometry: {
+          type: "Point",
+          coordinates: [4.863132722360224, 45.77022676914935],
+        },
+      },
+    },
+  })
+  .limit(5);
 
 _______________________
 result :
@@ -950,8 +984,41 @@ result :
 ************************************************************************
 21. Add Two New Vélo’V Stations to the Database
 
+db.velov_geo.insertMany([
+  {
+    properties: {
+      name: "Vaux-village",
+      lat: 45.786075,
+      lng: 4.926964,
+      available_bikes: 18,
+      available_bike_stands: 0,
+    },
+  },
+  {
+    properties: {
+      name: "Chassieu-Genas",
+      lat: 45.738238,
+      lng: 4.969414,
+      available_bikes: 8,
+      available_bike_stands: 4,
+    },
+  },
+]);
+
 _______________________
 result :
+
+{
+  "acknowledged": true,
+  "insertedIds": {
+    "0": {
+      "$oid": "695e77eb0b481877f0700faf"
+    },
+    "1": {
+      "$oid": "695e77eb0b481877f0700fb0"
+    }
+  }
+}
 
 ************************************************************************
 22.	Data enrichment 
@@ -959,18 +1026,434 @@ Look for downloadable data in JSON format on the website https://data.grandlyon.
 
 a)	Provide the URL that allows you to download the data and explain how you think it can complement the MongoDB collection of Vélo’V stations.
 
+https://data.grandlyon.com/geoserver/metropole-de-lyon/ows?SERVICE=WFS&VERSION=2.0.0&request=GetFeature&typename=metropole-de-lyon:adr_voie_lieu.adrtoilettepublique_latest&outputFormat=application/json&SRSNAME=EPSG:4171&sortBy=gid
+
+Ce qui correspond au GeoJSON sur le front-end web proposant différents formats de téléchargements :
+
+https://data.grandlyon.com/portail/fr/jeux-de-donnees/toilettes-publiques-metropole-lyon-v2/telechargements
+
+Ce fichier permet d'accéder aux toilettes publiques de la métropole de Lyon.
+
+
 b)	Download the data and import it into MongoDB, simplify it to have more than one document. Describe your procedure.
 
+On peut soit le faire en ligne de commande :
+
+```bash
+mongoimport --db mongoLab --collection toilettes --file "toilettes.json"
+```
+
+Soit en Javascript :
+
+```js
+const fs = require("fs");
+const raw = fs.readFileSync(
+  "toilettes.json",
+  "utf-8"
+);
+const data = JSON.parse(raw);
+db.toilettes.insertMany(data.features);
+```
 
 c)	Provide at least 3 MongoDB queries that combine the new information with the old data: 
-    1 that involves matching addresses (properties.address, properties.nom, … check the fields), 
-    
-    another that implies geographic coordinate comparison. 
-    
-    For the additional queries use your imagination.
-     
-Describe your method. Provide: query, results and explanation. 
- 
+    1 that involves matching addresses (properties.address, properties.nom, … check the fields), ...
+
+-----------------------------------------------------------
+NOTE : Nous n'arrivons pas à joindre les données en entier entre les deux collections.
+`db.toilettes.find()` renvoie correctement les 495 toilettes ajoutées, mais :
+```js
+db.velov_geo.aggregate([
+  {
+    $lookup: {
+      from: "toilettes"
+    },
+  }
+]);
+```
+
+Est systématiquement limité à 20.
+Ainsi les requêtes se comportent comme s'il n'y avait que 20 toilettes publiques dans Lyon, auquel cas les résultas seraient plus cohérents.
+-----------------------------------------------------------
+
+Cette première requête permet de savoir combien de stations et toilettes publiques sont situées sur une place.
+
+db.velov_geo.aggregate([
+  {
+    $facet: {
+      velov_stations_with_place: [
+        {
+          $match: {
+            $or: [
+              { "properties.address": { $regex: "Place", $options: "i" } },
+              { "properties.address2": { $regex: "Place", $options: "i" } },
+            ],
+          },
+        },
+        { $count: "nb_velov_stations" },
+      ],
+      toilettes_with_place: [
+        {
+          $lookup: {
+            from: "toilettes",
+            pipeline: [
+              {
+                $match: {
+                  "properties.adresse": /Place/i,
+                },
+              },
+            ],
+            as: "toilettes",
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            nb_toilettes: { $size: "$toilettes" },
+          },
+        },
+        { $limit: 1 },
+      ],
+    },
+  },
+]);
+
+Retour:
+
+
+[
+  {
+    velov_stations_with_place: [ { nb_velov_stations: 71 } ],
+    toilettes_with_place: [ { nb_toilettes: 136 } ]
+  }
+]
+
+
+    ... another that implies geographic coordinate comparison...
+
+Cette deuxième requête permet de connaitre le nombre de toilettes situées à moins de 500 mètres de chaque station.
+
+db.velov_geo.createIndex({ geometry: "2dsphere" });
+db.toilettes.createIndex({ geometry: "2dsphere" });
+
+db.velov_geo.aggregate([
+  {
+    $lookup: {
+      from: "toilettes",
+      let: { stationLocation: "$geometry" },
+      pipeline: [
+        {
+          $geoNear: {
+            near: "$$stationLocation",
+            key: "geometry",
+            distanceField: "distance",
+            spherical: true,
+            maxDistance: 500
+          }
+        }
+      ],
+      as: "nearby_toilettes"
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      station_name: "$properties.name",
+      station_address: "$properties.address",
+      nb_toilettes_500m: { $size: "$nearby_toilettes" }
+    }
+  }
+]);
+
+Retour:
+
+[
+  {
+    station_name: 'Place de la Rochette',
+    station_address: 'Place de la Rochette',
+    nb_toilettes_500m: 3
+  },
+  {
+    station_name: 'Bellecour',
+    station_address: 'Place Bellecour',
+    nb_toilettes_500m: 8
+  },
+  {
+    station_name: 'Charpennes',
+    station_address: 'Place Charles Hernu',
+    nb_toilettes_500m: 2
+  },
+  {
+    station_name: 'Augagneur',
+    station_address: '28 quai Augagneur',
+    nb_toilettes_500m: 13
+  },
+  {
+    station_name: 'Confluence Les Docks',
+    station_address: "Sur l'esplanade entre la rue Hrant Dink et le 40 quai Rambaud",
+    nb_toilettes_500m: 2
+  },
+..........
+]
 
 
 
+
+
+    ...For the additional queries use your imagination.
+
+Cette requête un peu plus longue répond à une question: imaginez un besoin urgent sur votre vélo, combien de temps mettrez vous à atteindre un toilette depuis une station en médiane?
+Pour atteindre ce résultat, nous associons chaque station à toutes les toilettes. Puis calculons la distance entre la station et tous les toilettes pouir ne garder que la plus courte.
+Ensuite nous convertissons la distance en temps en supposant une vitesse de marche de 3KM/h puis on calcule la médiane.
+
+
+1:Création des index géographiques:
+
+db.velov_geo.createIndex({ geometry: "2dsphere" });
+db.toilettes.createIndex({ geometry: "2dsphere" });
+
+
+2: Association des statiosn Velov à toutes les toilettes publiques par leurs coordonnées géographiques
+
+db.velov_geo.aggregate([
+  {
+    $lookup: {
+      from: "toilettes",
+      pipeline: [
+        {
+          $project: {
+            _id: 0,
+            coordinates: "$geometry.coordinates"
+          }
+        }
+      ],
+      as: "toilettes"
+    }
+  },
+  {
+    $project: {
+      station_name: "$properties.name",
+      station_coordinates: "$geometry.coordinates",
+      toilettes_coordinates: "$toilettes.coordinates"
+    }
+  }
+]);
+
+
+
+3: Calcule de la distance minimale par station pour atteindre un toilette et affcihage de 5 résultats pour vérification
+
+db.velov_geo.aggregate([
+  {
+    $lookup: {
+      from: "toilettes",
+      pipeline: [
+        { $project: { _id: 0, coords: "$geometry.coordinates" } }
+      ],
+      as: "toilettes"
+    }
+  },
+  { $unwind: "$toilettes" },
+
+  {
+    $project: {
+      station_name: "$properties.name",
+
+      distance_m: {
+        $multiply: [
+          6371000,
+          {
+            $acos: {
+              $add: [
+                {
+                  $multiply: [
+                    { $sin: { $degreesToRadians: { $arrayElemAt: ["$geometry.coordinates", 1] } } },
+                    { $sin: { $degreesToRadians: { $arrayElemAt: ["$toilettes.coords", 1] } } }
+                  ]
+                },
+                {
+                  $multiply: [
+                    { $cos: { $degreesToRadians: { $arrayElemAt: ["$geometry.coordinates", 1] } } },
+                    { $cos: { $degreesToRadians: { $arrayElemAt: ["$toilettes.coords", 1] } } },
+                    {
+                      $cos: {
+                        $subtract: [
+                          { $degreesToRadians: { $arrayElemAt: ["$toilettes.coords", 0] } },
+                          { $degreesToRadians: { $arrayElemAt: ["$geometry.coordinates", 0] } }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+
+  {
+    $group: {
+      _id: "$station_name",
+      min_distance_m: { $min: "$distance_m" }
+    }
+  },
+
+  { $limit: 5 }
+]).pretty()
+
+4: convertir cette distance minimal en temps de trajet, avec pour hypothèse une marche de 3KM/H
+
+db.velov_geo.aggregate([
+  {
+    $lookup: {
+      from: "toilettes",
+      pipeline: [
+        { $project: { _id: 0, coords: "$geometry.coordinates" } }
+      ],
+      as: "toilettes"
+    }
+  },
+  { $unwind: "$toilettes" },
+
+  {
+    $project: {
+      station_name: "$properties.name",
+
+      distance_m: {
+        $multiply: [
+          6371000,
+          {
+            $acos: {
+              $add: [
+                {
+                  $multiply: [
+                    { $sin: { $degreesToRadians: { $arrayElemAt: ["$geometry.coordinates", 1] } } },
+                    { $sin: { $degreesToRadians: { $arrayElemAt: ["$toilettes.coords", 1] } } }
+                  ]
+                },
+                {
+                  $multiply: [
+                    { $cos: { $degreesToRadians: { $arrayElemAt: ["$geometry.coordinates", 1] } } },
+                    { $cos: { $degreesToRadians: { $arrayElemAt: ["$toilettes.coords", 1] } } },
+                    {
+                      $cos: {
+                        $subtract: [
+                          { $degreesToRadians: { $arrayElemAt: ["$toilettes.coords", 0] } },
+                          { $degreesToRadians: { $arrayElemAt: ["$geometry.coordinates", 0] } }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+
+  {
+    $group: {
+      _id: "$station_name",
+      min_distance_m: { $min: "$distance_m" }
+    }
+  },
+
+  {
+    $project: {
+      _id: 0,
+      station_name: "$_id",
+      time_minutes: { $divide: ["$min_distance_m", 50] }
+    }
+  }
+]);
+
+
+5: calcul et affichage de la médiane
+
+db.station_toilet_time.aggregate([
+  { $sort: { time_minutes: 1 } },
+  {
+    $group: {
+      _id: null,
+      times: { $push: "$time_minutes" },
+      n: { $sum: 1 }
+    }
+  },
+  {
+    $project: {
+      median_time_minutes: {
+        $arrayElemAt: [
+          "$times",
+          { $floor: { $divide: ["$n", 2] } }
+        ]
+      }
+    }
+  }
+]);
+
+
+Retour des requêtes:
+
+2:
+
+    _id: ObjectId('695d117b6e5221cbe9639d45'),
+    station_name: 'Place de la Rochette',
+    station_coordinates: [ 4.823597023963744, 45.791670182603994 ],
+    toilettes_coordinates: [
+      [ 4.723116, 45.74329 ],  [ 4.818718, 45.873012 ], [ 4.726184, 45.754759 ],
+      [ 4.805083, 45.878549 ], [ 4.825113, 45.837801 ], [ 4.78423, 45.765376 ],
+      [ 4.856551, 45.780612 ], [ 4.851957, 45.777252 ], [ 4.845038, 45.791062 ],
+      [ 4.836351, 45.787966 ], [ 4.853152, 45.800711 ], [ 4.84237, 45.79761 ],
+      [ 4.828544, 45.793875 ], [ 4.84927, 45.794879 ],  [ 4.838419, 45.877889 ],
+      [ 4.821917, 45.728274 ], [ 4.887219, 45.749927 ], [ 4.86846, 45.752163 ],
+      [ 4.85064, 45.781322 ],  [ 4.852074, 45.778694 ], [ 4.838377, 45.875933 ],
+      [ 4.79851, 45.805189 ],  [ 4.853154, 45.775446 ], [ 4.851705, 45.802398 ],
+      [ 4.779185, 45.797594 ], [ 4.789415, 45.794254 ], [ 4.794444, 45.649275 ],
+      [ 4.840811, 45.877834 ], [ 4.813536, 45.698377 ], [ 4.785712, 45.684054 ],
+      [ 4.786798, 45.689856 ], [ 4.794956, 45.698607 ], [ 4.789191, 45.683623 ],
+      [ 4.872368, 45.703778 ], [ 4.874847, 45.761532 ], [ 4.833732, 45.767154 ],
+      [ 4.849836, 45.75351 ],  [ 4.81616, 45.776731 ],  [ 4.823336, 45.778076 ]]
+
+On ne met qu'une partie de la sortie, sinon cela serait trop long. On a donc un tableau avec pour chaque station, son ID, sa position et la position des toilettes.
+
+3:
+
+[
+  { _id: 'Place de Stalingard', min_distance_m: 295.0280841230309 },
+  { _id: 'Place Bir Hakeim', min_distance_m: 72.9062912833495 },
+  {_id: '11 novembre / Gaston Berger',min_distance_m: 202.1834791963945},
+  { _id: 'Le Château', min_distance_m: 202.4058847084248 },
+  { _id: 'Bon Coin', min_distance_m: 373.05586059919466 }
+]
+
+4:
+
+[
+  { station_name: 'Place de Stalingard', time_minutes: 5.900561682460618},
+  { station_name: 'Place Bir Hakeim', time_minutes: 1.45812582566699 },
+  { station_name: 'Hôpital Neurologique', time_minutes: 3.3660779545766504},
+  { station_name: 'Bon Coin', time_minutes: 7.461117211983893 },
+  { station_name: 'Place du Château', time_minutes: 0.9174837183627637},
+  { station_name: '11 novembre / Gaston Berger', time_minutes: 4.04366958392789},
+  { station_name: 'Berthelot / Pasteur', time_minutes: 4.228235714553563},
+  { station_name: '4 août 1789 / Zola', time_minutes: 1.0103899137119916},
+  { station_name: 'Place Jean Macé', time_minutes: 0.5678559430731142 },
+  { station_name: 'ZAC de la Buire', time_minutes: 3.234887924891484 },
+  { station_name: 'Hôpital St Luc - St Joseph',time_minutes: 0.3962340496906815},
+  { station_name: 'Terreaux / Chenavard', time_minutes: 1.460782482044962},
+  { station_name: 'Tabareau', time_minutes: 2.41612254407023 },
+  { station_name: 'Rouville', time_minutes: 1.2475365111679027 },
+  { station_name: 'Pixel', time_minutes: 11.793943472229557 },
+  { station_name: 'Quai Lassagne', time_minutes: 5.112764247937683 },
+  { station_name: 'Place Raspail', time_minutes: 0.8030785543801174 },
+  { station_name: 'Ayasse/Farge', time_minutes: 7.4072532404953835 },
+  { station_name: 'Subsistances', time_minutes: 1.2133875003943075 },
+  { station_name: 'Laennec / Facultés', time_minutes: 5.066945791669601}
+]
+
+5:
+
+[ { _id: null, median_time_minutes: 3.9899118076577866 } ]
