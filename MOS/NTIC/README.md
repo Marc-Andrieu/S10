@@ -34,6 +34,7 @@ Idées de moi :
 
 -   RISC-V : enfin une archi open-source et moderne
 -   Rust, Zig, les nouveaux langages bas-niveaux
+-   la situation de l'open-source avec l'arrivée des LLM
 
 Tuteurs potentiels (where ça peut me plaîre) :
 
