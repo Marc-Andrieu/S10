@@ -76,3 +76,26 @@ Struct de données :
 -   info topologique (ds un Triangle on met les n° des pts, ie. les pointeurs, on n'y copie pas les valeurs, c teubé c dla redondance et le "maillage bouge", les coor des pts bougent ms pas quel pt est tricoté à quels triangles)
 
 Les arêtes sont orientées ici, et on les appelle des $\tfrac{1}{2}$-arêtes (_half-edges_).
+
+---
+
+Le C++ ut bcp la pile (heap), qui est une liste LIFO, là où le Java se sert quasi-exclusivement de la stack.
+
+Avec :
+
+```cpp
+LaClasse *p = new LaClasse();
+```
+
+Le pointeur `p` est ajouté à la heap, et il pointe à `p` sur la stack.
+
+Pr libérer :
+
+```
+delete p;
+```
+
+Ds la heap, la durée de vie est liée au bloc.
+Ds la stack, elle est liée l'existence d'un pointeur de la heap qui lui pointe dessus.
+
+Le constructeur ne construit pas, il initialise (instancie).
