@@ -26,7 +26,7 @@ Gain de tps, ms risque d'infobésité.
 Etapes dla veille :
 
 1. ciblage
-    - plzn de veille : axes, keywords, sources
+    - plan de veille : axes, keywords, sources
 2. collecte : alertes, dashboards
 3. analyse : qualité dl'info, auteurs, extraire sources etc, voir les corrélations
 4. diffusion : régulière, état de l'art, synthèse
@@ -49,7 +49,7 @@ Outils : papiers scientifiques, GH, "rapports", réseaux sociaux, Google Scholar
 
 ## Rappels recherche doc
 
-"a", OR, site:a.com, debu\* -a, before:date, after:date, intitle:a, allintitle:a b c.
+"a", OR, site:a.com, debut -a, before:date, after:date, intitle:a, allintitle:a b c.
 
 https://perplexity.ai pr des réponses précises avec sources
 
@@ -70,5 +70,23 @@ Outils de Social Listening : Talkwalker, Brand24, SparkToto
 # Veille & IA gén
 
 # Curation et livrable
+
+La mat 1e informationnelle est riche, ms cmplx, hétéro, contradictoire, évolutive & pas hiérarchisée.
+
+Le livrable de veille est synthétique, analysé, validé, sourcé, structuré, hiérarchisé, cohérent, et encore une tripotée d'adjectifs.
+
+## Définitions et processus
+
+-   La curation c collecter & orga des infos les + pertinentes, et les "rediffuser".
+-   Le livrable c pr nous permettre de synthétiser & présenter nos analyses sous forme claire & concise.
+
+## Curation vs Livrable de veille
+
+-   https://scoop.it
+-   flipboard, c surtt orienté mobile
+
+Livrable de veille en ep : soit écrit (structuré w/ intro, dév & concl), soit oral (synthétique & impactant), infographie (rpzation visuelle), blog/article en ligne (partage w/ la commu')
+
+##
 
 # Mise en pratique : livrable
