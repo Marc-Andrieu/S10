@@ -1,0 +1,31 @@
+services:
+    hadoop-master:
+        hostname: hadoop-master
+        image: stephanederrode/docker-cluster-hadoop-spark-python-16:3.6
+        ports:
+            - 9870:9870
+            - 8088:8088
+            - 7077:7077
+            - 16010:16010
+            - 9999:9999
+        networks:
+            - hadoop
+
+    hadoop-slave1:
+        hostname: hadoop-slave1
+        image: stephanederrode/docker-cluster-hadoop-spark-python-16:3.6
+        ports:
+            - 8040:8042
+        networks:
+            - hadoop
+    hadoop-slave2:
+        hostname: hadoop-slave2
+        image: stephanederrode/docker-cluster-hadoop-spark-python-16:3.6
+        ports:
+            - 8041:8042
+        networks:
+            - hadoop
+
+networks:
+    hadoop:
+        driver: bridge
