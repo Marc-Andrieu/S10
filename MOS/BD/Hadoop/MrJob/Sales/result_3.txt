@@ -1,0 +1,5 @@
+"Amex"	4167.34
+"Cash"	3511.56
+"Discover"	3217.94
+"MasterCard"	7117.61
+"Visa"	6141.3

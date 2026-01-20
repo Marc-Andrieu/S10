@@ -1,0 +1,18 @@
+"Baby"	515
+"Books"	600
+"CDs"	555
+"Cameras"	518
+"Children's Clothing"	554
+"Computers"	550
+"Consumer Electronics"	564
+"Crafts"	556
+"DVDs"	539
+"Garden"	539
+"Health and Beauty"	567
+"Men's Clothing"	573
+"Music"	547
+"Pet Supplies"	560
+"Sporting Goods"	536
+"Toys"	572
+"Video Games"	600
+"Women's Clothing"	555

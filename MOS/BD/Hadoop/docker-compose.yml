@@ -18,6 +18,9 @@ services:
             - 8040:8042
         networks:
             - hadoop
+        depends_on:
+            hadoop-master:
+                condition: service_healthy
     hadoop-slave2:
         hostname: hadoop-slave2
         image: stephanederrode/docker-cluster-hadoop-spark-python-16:3.6
@@ -25,7 +28,11 @@ services:
             - 8041:8042
         networks:
             - hadoop
+        depends_on:
+            hadoop-master:
+                condition: service_healthy
 
 networks:
     hadoop:
-        driver: bridge
+        name: hadoop
+        external: true

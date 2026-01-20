@@ -1,0 +1,18 @@
+"Baby"	132845.15
+"Books"	149213.91
+"CDs"	142896.84
+"Cameras"	134448.18
+"Children's Clothing"	138348.24
+"Computers"	141206.54
+"Consumer Electronics"	147882.21
+"Crafts"	137843.05
+"DVDs"	133396.26
+"Garden"	134093.76
+"Health and Beauty"	143057.23
+"Men's Clothing"	145254.71
+"Music"	130034.72
+"Pet Supplies"	143597.82
+"Sporting Goods"	134396.82
+"Toys"	139445.65
+"Video Games"	147361.19
+"Women's Clothing"	136447.38
