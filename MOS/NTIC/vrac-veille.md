@@ -16,6 +16,8 @@
 - [x] tollchain
 - [x] Traitement des erreurs
 
+Tous essaient de garder la puissance du C tout en modernisant l'expérience, ms de manières radicalement différentes.
+
 ### Gestion de la mémoire
 
 - Memory-safe ou pas
@@ -29,7 +31,7 @@ Go et les langages interprétés sont garbade-collected : la collection des déc
 
 Bref : avec le C on a un langage puissant, fais ce que tu veux, donc c à nous le développeur de rattraper ces problèmes.
 
-Le truc : si on considère le nouveau dév, qui essaie de se mettre au bas-niveau, d'apprendre un nouveau langage, ms veut pas apprendre Rust car trop dur, ni C car pas memory-safe -> c là que Zig se place très bien.
+Le truc : si on considère le nouveau dév, qui essaie de se mettre au bas-niveau, d'apprendre un nouveau langage, ms veut pas apprendre Rust car trop dur, ni C car pas memory-safe -> c là que Zig se place très bien, pr rendre abordable le travail bas-niveau et sans cacher les ce que ça coûte.
 
 > Zig [...] how minimal it feels - you can comfortably go through the language documentation in a couple hours because there just isn't that much to learn.
 > Zig comfortably gets so much done with comparably so few features.
@@ -38,6 +40,8 @@ En Zig, y a pas d'allocation cachée : toutes les allocations sont uniquement ce
 Zig a le keyword `defer` qui, à la compilation, décale la ligne à la fin du bloc (et run au moment où le scope du bloc est sur le point d'être franchi) : qd on alloue une page mémoire, la ligne d'après c un defer de libérer cette mémoire, comme ça à la lecture on voit immédiatement que la mémoire est bien libérée (l'alloc et le free sont proches dans le code), et à la compilation c'est mis au bon endroit.
 
 En Zig, y a une interface unifiée et cohérente pr la gestion de la mémoire, les allocators peuvent facilement être remplacés ds le code pr viser différentes archs (y compris le wasm et du bare metal).
+
+Ce caractère explicite est pratique jusqu'à des environnements embarqués, car en lisant le code on sait quasiment ce qui va prendre du temps ou non.
 
 La performance : la compilation de Rust avec le Borrow Checker, ça rend l'exécution + lourde (tous les voitures n'ont pas besoin d'être construites comme des tanks).
 
@@ -67,7 +71,31 @@ for (memoire) |*octet| { // utiliser
 
 L'intégration de C en Zig a l'air juste légendaire...
 En fait c la meilleure toolchain pour C.
-Cross-compilation vers C/C++ supportée nativement
+Cross-compilation vers C/C++ supportée nativement.
+En fait Zig a été conçu avec l'interop C en tête, et traite le C comme un _first-class citizen_ (y a vrmt pas d'équivalent en français) donc y a un feeling que les imports C sont natifs : on peu importer des headers C et utiliser les fonctions comme si c'était du Zig :
+
+```zig
+const std: type = @import("std");
+const c: type = @cImport({
+    @cInclude("ctype.h");
+});
+
+pub fn main() !void {
+    const truc: c_int = c.isdigit('8');
+}
+```
+
+Ca veut dire qu'on peut déplacer progressivement une codebase C vers du Zig, en important des fonctions C toutes prêtes !
+
+En Rust y a toute une cérémonie, avec des labels `extern` et `unsafe`, des frontières minutieusement définies :
+
+```rs
+extern "C" fn cmp_i32(a: *const c_void; b: *const c_void) -> c_int { // -1, 0 ou 1
+    let pa = unsafe { &*(a as *const i32) };
+    let pb = unsafe { &*(b as *const i32) };
+    (*pa).cmp(pb) as c_int
+}
+```
 
 En Zig, y a un mot-clef `comptime` qui exécute du code à la compilation et pas à l'exécution (je trouve ça analogue au Server-Side Rendering en Next.js) : fini les macros du C (et + généralement le pre-processing ie. l'étape n°1/4 de la compilation de C avec GCC).
 
@@ -82,6 +110,13 @@ comptime {
 
 Fini l'usage de LLVM en Zig (je crois qu'on se rend pas compte d'à quel pt c ambitieux)
 
+La correspondance entre du code Rust et les instructions mémoires et le timing est moins évidente qu'avec Zig ou C, qui sont "+ proches du métal".
+C'est une question de prédictabilité.
+
+LLVM c la façon "moderne" et class-platform : on compile pas en binaire de chaque arch, ms vers une représentation intermédiaire qi s'appelle LLVM IR (oui, Intermediate Representation, le nom est bien choisi), et LLVM est un back-end qui se charge d'optimiser tout ça et de compiler vers pour les archs de ce qu'on veut.
+
+Rust utilise LLVM pr la codegen. Zig peut l'utiliser aussi ms utilise par défaut... son propre back-end (ils font vraiment tout)
+
 ### Maturité
 
 - Maturité / date de création
@@ -91,12 +126,19 @@ Fini l'usage de LLVM en Zig (je crois qu'on se rend pas compte d'à quel pt c am
 
 Le C a une stdlib très mature.
 
-En Zig :
+En Zig, c pas aussi mature que Rust, ms ça s'améliore à grande vitesse :
 
 - Les erreurs de compilation sont particulièrement explicites.
 - Y a un framework de test qui est natif (comme pytest en Python).
 - On peut choisir de compiler en optimisant au choix la safety, la petitesse du binary qui sort, ou la vitesse.
 - Le langage se veut minimal, et juste simple à prendre en main (comme C, + ou -).
+- La toolchain pr build (targets, étapes, linker, tests, etc), c pas des dingueries genre Make/CMake/Premake, mais du **code**, en Zig lui-mm, en code sur lequel on peut raisonner !
+  Ca assure la répétabilité.
+
+En Rust :
+
+- Cargo, le package manager qui manage l'écosystème de crates, et c vrmt mature, complet, y a de tout, comme en Python.
+- En toolchain y a déjà de quoi faire bcp : intégration ds les éditeurs de texte, framework de tests, doc, cross-compilation, etc
 
 ### Syntaxe
 
@@ -124,8 +166,12 @@ pub fn main() !void {
 }
 ```
 
-En Zig, les erreurs sont des valeurs : y a pas de control flow caché derrière des Exception qui se propage chèpakoi.
+En Zig, les erreurs sont des valeurs : y a pas de control flow caché derrière des Exception qui se propage chèpakoi, ce sont des valeurs ordinaires, fortement typées.
+Soit on a une valeur, ou un nom d'erreur, ou choisit de propager ou gérer l'erreur.
 A nouveau c très explicite, on est obligés de gérer tous les erreurs qu'on peut avoir.
+Le langage nous mène vers un code clair plutôt que vers un truc malin ms alembiqué.
+
+En Rust, la gestion des erreurs c explicite aussi, ms Rust encourage l'usage de types + "riches", le code reste compact sans perdre en clarté.
 
 ```
 const std = @import("std");
@@ -166,6 +212,24 @@ pub fn main() !void {
 }
 ```
 
+```zig
+const std = @import("std");
+
+pub fn main() !void {
+    const allocator = std.heap.page_allocator;
+    const file = try std.fs.cwd().openFile(
+        "truc.txt",
+        .{ .mode: .read_only }
+    );
+    defer file.close();
+
+    const contents = try file.readToEndAlloc(allocator, std.math.maxInt(usize));
+    defer allocator.free(contents);
+
+    std.debug.print("Contenu du fichier : {s}\n", .{contents});
+}
+```
+
 Le type de retour c `std.fs.File.OpenError!std.fs.File`, à droite du `!` c le type qd c bon, à gauche c le type qd c une erreur.
 Qd on appelle la fn, on traite direct le cas où y a une erreur (`catch |e|`) avant mm d'assigner à une variable la potentielle bonne valeur : ça nous force à gérer chaque possibilité d'erreur.
 
@@ -175,7 +239,74 @@ Et les erreurs de compilation se veulent claires, pas un vieux segfault.
 
 En Rust, on renvoie un Enum pour renvoyer un Ok ou un Error, et on fait du `match` dessus.
 
-En Zig, y a pas de surcharge d'opérateur
+En Zig, y a pas de surcharge d'opérateur.
+
+En Zig, le `if` est une expression, qui renvoie une valeur, je trouve ça génial ça retire le besoin d'une syntaxe ternaire séparée :
+
+```zig
+const std: type = @import("std");
+const E: type = error{NaN};
+
+fn toInt(ch: u8) E!u8 {
+    return if (ch >= '0' and ch <= '9') ch - '0' else E.NaN;
+}
+```
+
+```rs
+// pub fn openfile(path: []u8) std.fs.File.OpenError!std.fs.File {
+//     return std.fs.cwd().openFile(path, .{
+//         .mode = .read_only,
+//     })
+// }
+use std::{
+    error::Error,
+    fs
+}
+
+fn openfile() -> <Result, Box<dyn Error>> {
+    let text = fs::read_to_string("path.txt")?;
+    let n: u32 = text.trim().parse()?;
+    Ok(n)
+}
+```
+
+Rust n'essaie pas d'être transparent mais safe par défaut, et le compilateur sert de garde du corps qui va bloquer un certain nbr "d'anti-patterns".
+Au début on se "bat" contre, c d'abord un prof puis un allié.
+
+Rust c une épée à double-tranchant.
+
+Y a une qté aberrante d'abstractions (itérateurs, pattern matching, enums) on se croirait ds un langage très haut-niveau voire paradigme fonctionnel :
+
+```rs
+fn sum_squares(nums: &[i32]) -> i32 {
+    nums.iter().copied().map(|n| n * n).sum()
+}
+
+fn main() {
+    let vec = [3, 4, 12];
+    println!("{}", sum_squares(&vec));
+}
+```
+
+Et on fait confiance au compilateur et ses optimisations pr que le binaire généré soit efficace.
+Ms c exactitude d'abord et perf ensuite.
+
+Interop avec du C et usage de pointeurs en unsafe
+
+```rs
+extern "C" { fn sqrtf(x: f32) -> f32; }
+
+fn troisieme_octet(bug: &mut[u8, 4]) {
+    unsafe {
+        let p = buf.as_mut_ptr().add(2);
+        *p = 42;
+    }
+}
+```
+
+La zone de danger est délimitée explicitement.
+
+Le compilateur de Rust veut tout monomorphiser, tout le code a l'air de se ressembler.
 
 ## Pts spécifiques
 
@@ -190,7 +321,12 @@ En Zig, y a pas de surcharge d'opérateur
   Conséquence : des tutos datant d'octobre sont déjà obsolètes.
   On a déjà vu des langages se tirer une balle ds le pied en allant trop vite vers le 1.0 puis être coincé ds l'obligation d'être rétrocompatible.
 
-- C est pas memory-safe, Rust est trop dur ; Zig arrive pile au bon endroit.
+- C n'est pas memory-safe, Rust est trop dur ; Zig arrive pile au bon endroit.
+- Rust c qd on veut du long-terme, maintenable, qui supporte l'exactitude mm en concu.
+- Zig : code transparent, minimum d'abstractions, allocations mémoire explicites, chemin prévisible.
+  On choisit Zig si on veut importer du C direct, contrôler les allocations -> kernel, bootloader et autres firmware où le déterministe est non-négociable
+- Rust : invariance qui tient mm qd on scale up.
+  On choisit Rust si on fait un service complexe, avec de la concu, long-terme, et que l'exactitude c non-négociable -> stockage, db, communications réseau, compilateurs, et là où y a bcp de concu
 
 ## Bibligraphie (Rust Zig C3)
 
@@ -205,6 +341,7 @@ En Zig, y a pas de surcharge d'opérateur
 - Code source
     - https://github.com/rust-lang/rust
     - https://codeberg.org/ziglang/zig
+        - [zig#16270 - make the main zig executable no longer depend on LLVM, LLD, and Clang libraries](https://github.com/ziglang/zig/issues/16270)
     - https://github.com/c3lang/c3c
 - Comparaisons
     - https://c3-lang.org/faq/compare-languages/
@@ -212,6 +349,11 @@ En Zig, y a pas de surcharge d'opérateur
 - YT
     - Low Level
         - [zig will change programming forever](https://www.youtube.com/watch?v=pnnx1bkFXng)
+    - Fireship
+        - []()
+    - TheTechyShop
+        - [Zig vs Rust: Who’s Closer to the Metal?](https://www.youtube.com/watch?v=ftDTHtgPKJo)
+        - [C3 vs Zig in 2025: Who’s Really Fixing C?](https://www.youtube.com/watch?v=y3tDZACGRAY)
 
 ## Vrac autres
 
@@ -235,3 +377,16 @@ I could go on an on but TLDR if you are a C developer you should definitely try 
 Let's all agree on the fact that Zig has by far the best build system. It is literally built into the language itself. No more bullshit Makefiles, pkgconf or Ninja. Don't even get me started with CMake.
 
 ---
+
+writing in rust feels like: here’s a set list of the most ideal ways to write code, proven over the last few decades, and we want you to write in this way specifically, no other way. for that reason, I’d say zig is closer to the metal, but I like rust more :3
+
+---
+
+If I am rewriting C code, I choose zig.
+If I am rewriting python code, I choose rust.
+Zig offers safety without sacrificing the performance.
+Rust offers performance without sacrificing the abstractions.
+
+---
+
+Once zig hits 1.0 it will gain a lot of followers
