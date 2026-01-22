@@ -16,7 +16,7 @@
 - [x] tollchain
 - [x] Traitement des erreurs
 
-Tous essaient de garder la puissance du C tout en modernisant l'expérience, ms de manières radicalement différentes.
+Tous essaient de garder la puissance du C tout en modernisant la DX, avec des mécanismes de safety par défaut, ms de manières radicalement différentes.
 
 ### Gestion de la mémoire
 
@@ -85,7 +85,10 @@ pub fn main() !void {
 }
 ```
 
-Ca veut dire qu'on peut déplacer progressivement une codebase C vers du Zig, en important des fonctions C toutes prêtes !
+Ca veut dire qu'on peut porter progressivement une codebase C vers du Zig, en important des fonctions C toutes prêtes !
+
+Aussi, Zig vient avec un compilateur de C/C++ qui est de très loin le + facile et rapide et à installer sous Windows (j'ai Visual Studio, GCC, je sais de quoi je parle).
+En fait Zig c pas juste un langage, c aussi une toolchain, qui veut unifier tt ça ds un système cohérent.
 
 En Rust y a toute une cérémonie, avec des labels `extern` et `unsafe`, des frontières minutieusement définies :
 
@@ -107,6 +110,21 @@ comptime {
 ```
 
 [comparer à l'assembleur généré]
+
+Zig et Rust ont en fait la mm stratégie pr les types génériques : le compilateur regarde quels types font vraiment être passés à la fonction et créé une fonction dédiée pour chaque type :
+
+```
+fn max(comptime T: type, a: T, b: T) T {
+    return if (a > b) a else b;
+}
+
+fn maxfloat(a: f32, b: f32) f32 {
+    return max(f32, a, b);
+}
+fn maxint(a: u64, b: u64) u64 {
+    return max(u64, a, b);
+}
+```
 
 Fini l'usage de LLVM en Zig (je crois qu'on se rend pas compte d'à quel pt c ambitieux)
 
@@ -139,6 +157,11 @@ En Rust :
 
 - Cargo, le package manager qui manage l'écosystème de crates, et c vrmt mature, complet, y a de tout, comme en Python.
 - En toolchain y a déjà de quoi faire bcp : intégration ds les éditeurs de texte, framework de tests, doc, cross-compilation, etc
+
+C3 se veut comme une petite amélioration, les autres comme une révolution.
+C3 essaie autant que possible de ressembler au C, de donner une sensation similaire au C, juste amélioré : syntaxe + propre, qlq garde-fous, prédictabilité, et une toolchain moderne.
+Zig cherche pas à améliorer le C ms à l'englober, le compiler, bref le remplacer.
+C'est bcp + ambitieux.
 
 ### Syntaxe
 
@@ -307,6 +330,40 @@ fn troisieme_octet(bug: &mut[u8, 4]) {
 La zone de danger est délimitée explicitement.
 
 Le compilateur de Rust veut tout monomorphiser, tout le code a l'air de se ressembler.
+
+C3 se définit comme un petit langage, proche du C, qui n'essaie pas de réinventer la roue :
+
+- ça garde cque les gens apprécie en C (prédictabilité, la stabilité de l'ABI, la proximité avec les instructions mémoire),
+- et ça offre une toolchain + moderne : une vraie notion de modules.
+
+C3 utilise des optionals :
+
+```c3
+int? a = 1;
+int? b = io::FILE_NOT_FOUND?;
+```
+
+Y a le mot-clef `defer` comme en Zig.
+Par rapport au C, ça ajoute aussi des types génériques, des slices, un meilleur type-checking, et du zero-init (les variables valent 0 par défaut à l'initialisation au lieu d'être undefined).
+Y a un `fn` devant les fonctions :
+
+```c
+int add(int *a, int *b) {
+    return *a + *b;
+}
+```
+
+```c3
+fn int add(int* a, int* b) {
+    return *a + *b;
+}
+```
+
+Comme avec Zig, on peut appeler du C depuis C3, et là c encore plus trivial à faire :
+
+```c3
+extern fn int puts(char*);
+```
 
 ## Pts spécifiques
 
