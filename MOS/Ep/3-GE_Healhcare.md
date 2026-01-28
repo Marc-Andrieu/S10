@@ -122,3 +122,9 @@ Comparaison : son algo met 0,6 ms, ITK met 13 minutes, c 1,5 MILLION de fois + l
 On peut aller encore + vite, en ne faisant pas de branching, en utilisant un GPU qui traite indépendamment chaque pixel, en faisant du SIMD (Single Instruction Multiple Data), etc.
 
 Le SIMD : en gros les registres contiennent pas mal de bits, donc en stockant "multiple data" ds un seul registre, on peut faire "plusieurs" choses en une seule instruction mémoire !
+
+## Example of various projects
+
+[J'ai rien noté]
+
+## Regulatory aspects
