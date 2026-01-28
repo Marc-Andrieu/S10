@@ -20,4 +20,4 @@ Ca reste relationnel.
 
 Composants de MongoDB
 
--   `mongod` c le serv
+- `mongod` c le serv

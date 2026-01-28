@@ -6,5 +6,5 @@ C lié au traitement d'img, au ML, ms aussi à la robotique, sciences cognitives
 
 Sujets proches :
 
--   "infographie" (_computer graphics_) : model -> img
--   ...
+- "infographie" (_computer graphics_) : model -> img
+- ...

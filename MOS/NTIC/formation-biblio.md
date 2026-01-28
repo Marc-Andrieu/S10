@@ -4,9 +4,9 @@ La strat de veille est aussi évaluée : le "dispositif" mis en place (outils de
 
 Avec ce TD, on saura :
 
--   setup une veille informationnelle
--   id, rechercher, organiser l'info pertinente
--   struct une synthèse
+- setup une veille informationnelle
+- id, rechercher, organiser l'info pertinente
+- struct une synthèse
 
 # C quoi une veille
 
@@ -39,11 +39,11 @@ Malheureusement ça conseille d'ut l'IA gén pr générer du contexte, mots-clef
 
 Outils : papiers scientifiques, GH, "rapports", réseaux sociaux, Google Scholar
 
--   Sites web : MIT Tech Review, Wired, The Verge, TechCrunch, L'usine Nouvelle, ...
--   Littérature : Google Scholar, Scopus, IEEE Xplore, The Conversation
--   Réseaux sociaux : X, LI, Research Gate
--   Sites communautaires : GH, r/
--   Bases spécialisées : Espacenet, Google Patent, Orbis, Cobaz
+- Sites web : MIT Tech Review, Wired, The Verge, TechCrunch, L'usine Nouvelle, ...
+- Littérature : Google Scholar, Scopus, IEEE Xplore, The Conversation
+- Réseaux sociaux : X, LI, Research Gate
+- Sites communautaires : GH, r/
+- Bases spécialisées : Espacenet, Google Patent, Orbis, Cobaz
 
 # La collecte d'infos
 
@@ -77,13 +77,13 @@ Le livrable de veille est synthétique, analysé, validé, sourcé, structuré, 
 
 ## Définitions et processus
 
--   La curation c collecter & orga des infos les + pertinentes, et les "rediffuser".
--   Le livrable c pr nous permettre de synthétiser & présenter nos analyses sous forme claire & concise.
+- La curation c collecter & orga des infos les + pertinentes, et les "rediffuser".
+- Le livrable c pr nous permettre de synthétiser & présenter nos analyses sous forme claire & concise.
 
 ## Curation vs Livrable de veille
 
--   https://scoop.it
--   flipboard, c surtt orienté mobile
+- https://scoop.it
+- flipboard, c surtt orienté mobile
 
 Livrable de veille en ep : soit écrit (structuré w/ intro, dév & concl), soit oral (synthétique & impactant), infographie (rpzation visuelle), blog/article en ligne (partage w/ la commu')
 

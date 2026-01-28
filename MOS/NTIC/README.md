@@ -12,14 +12,14 @@ Y a un tuteur à sg
 
 Livrables :
 
--   Oral de 15 mn, y a 6 séances de restit'
--   Doc avec les résultats de veille (synthèse des infos recueillies) + une annexe techno détaillant les méthodes de travail & outils ut.
+- Oral de 15 mn, y a 6 séances de restit'
+- Doc avec les résultats de veille (synthèse des infos recueillies) + une annexe techno détaillant les méthodes de travail & outils ut.
 
 Sources ok :
 
--   papiers sci
--   médias traditionnels / en ligne
--   (réseaux sociaux)
+- papiers sci
+- médias traditionnels / en ligne
+- (réseaux sociaux)
 
 Réstit' à partir du 23 janvier wtf, jusqu'au 6 mars
 
@@ -27,20 +27,20 @@ Sujet d'intérêt perso ou proposé par tuteur
 
 Suggestions de sujets (where ça peut me plaîre) :
 
--   Frameworks pr le dev d'apps mobiles hybrides
--   Où en est la loi de Moore ?
+- Frameworks pr le dev d'apps mobiles hybrides
+- Où en est la loi de Moore ?
 
 Idées de moi :
 
--   RISC-V : enfin une archi open-source et moderne
--   Rust, Zig, les nouveaux langages bas-niveaux
--   la situation de l'open-source avec l'arrivée des LLM
+- RISC-V : enfin une archi open-source et moderne
+- Rust, Zig, les nouveaux langages bas-niveaux
+- la situation de l'open-source avec l'arrivée des LLM
 
 Tuteurs potentiels (where ça peut me plaîre) :
 
--   Bichot
--   Bouyahya
--   Chalon
--   Dellandrea
--   Marchand
--   Vuillemot
+- Bichot
+- Bouyahya
+- Chalon
+- Dellandrea
+- Marchand
+- Vuillemot

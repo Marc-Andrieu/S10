@@ -23,13 +23,13 @@ On mappe $(a_{ij}; x_j)$ sur $(j; a_{ij} \times x_j)$, on reduce en sommant les 
 
 Le "socle technique" de Hadoop est composé de :
 
--   l'archi pr orchestrer le MapReduce, ie.
-    -   ordonnancement
-    -   localiser les fichiers
-    -   distrib l'exéc
--   le HDFS, qui est :
-    -   distribué (les données des fichiers sont sur plusieurs nodes)
-    -   répliqué (à la "RAID")
+- l'archi pr orchestrer le MapReduce, ie.
+    - ordonnancement
+    - localiser les fichiers
+    - distrib l'exéc
+- le HDFS, qui est :
+    - distribué (les données des fichiers sont sur plusieurs nodes)
+    - répliqué (à la "RAID")
 
 ### Master-slave
 

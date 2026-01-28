@@ -2,9 +2,9 @@
 
 Historique :
 
--   Archi 1 tier : _mainframe_ ou modèle centralisé, des 70s
--   Archi 2 tier : client-serveur
--   Archi 3 tier : distribué, web
+- Archi 1 tier : _mainframe_ ou modèle centralisé, des 70s
+- Archi 2 tier : client-serveur
+- Archi 3 tier : distribué, web
 
 ## Archi 1 tier : _mainframe_ des 70s
 
