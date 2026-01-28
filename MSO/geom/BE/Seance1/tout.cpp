@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 class Vertex {
@@ -7,7 +8,10 @@ class Vertex {
         double x;
         double y;
         double z;
-        int indice_tri;
+        int indice_face;
+        Vertex() : x(0), y(0), z(0), indice_face(0) {}
+        Vertex(double x_, double y_, double z_, int indice_face_) 
+            : x(x_), y(y_), z(z_), indice_face(indice_face_) {}
         void set(double x_, double y_, double z_) {
             x = x_;
             y = y_;
@@ -20,6 +24,10 @@ class Triangle {
         vector<int> indice_sommets = {0, 0, 0};
         vector<int> indice_faces = {0, 0, 0};
 
+        Triangle() : indice_sommets({0, 0, 0}), indice_faces({0, 0, 0}) {}
+        Triangle(vector<int> sommets, vector<int> faces) 
+            : indice_sommets(sommets), indice_faces(faces) {}
+
         int return_face(int sommet) {
             return indice_faces[(sommet + 1) % 3];
         };
@@ -31,6 +39,34 @@ class Mesh{
         vector<Triangle> tabF;
         bool check_integrity() {
             return true;
+        }
+};
+
+class OFFReader {
+    public:
+        Mesh read(const string& filename) {
+            ifstream infile(filename);
+            string line;
+            getline(infile, line);
+            if (line != "OFF"){
+                cerr << "Not a valid OFF file" << endl;
+                throw 1;
+            }
+            int Nvertices, Nftriangles;
+            infile >> Nvertices >> Nftriangles;
+            cout << Nvertices << " vertices, " << Nftriangles << " faces" << endl;
+            Mesh mesh;
+            for (int i = 0; i < Nvertices; i++) {
+                double x, y, z;
+                infile >> x >> y >> z;
+                mesh.tabV.push_back(Vertex(x, y, z, 0));
+            }
+            for (int i = 0; i < Nftriangles; i++) {
+                int a, b, c;
+                infile >> a >> b >> c;
+                mesh.tabF.push_back(Triangle({a, b, c}, {0, 0, 0}));
+            }
+            return mesh;
         }
 };
 
@@ -54,4 +90,6 @@ int main() {
     t1.indice_sommets = {0, 1, 3};
     t1.indice_sommets = {0, 2, 3};
     t1.indice_sommets = {1, 2, 3};
+    OFFReader reader;
+    Mesh mesh = reader.read("Test1.off");
 }
