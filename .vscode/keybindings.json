@@ -1,4 +1,42 @@
 [
+    // Alt + Left/Right (+ Select) = jump newline (and select).
+    // Extends existing Ctrl + Left/Right (+ Shift) to lines
+    {
+        "key": "alt+left",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "wrappedLineStart"
+        }
+    },
+    {
+        "key": "alt+right",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "wrappedLineEnd"
+        }
+    },
+    {
+        "key": "alt+shift+left",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "wrappedLineStart",
+            "select": true
+        }
+    },
+    {
+        "key": "alt+shift+right",
+        "command": "cursorMove",
+        "when": "editorTextFocus",
+        "args": {
+            "to": "wrappedLineEnd",
+            "select": true
+        }
+    },
+    // Ctrl + Up/Down (+ Shift) = jump paragraph (and select).
+    // Extends existing Ctrl + Left/Right (+ Shift) to paragraphs
     {
         "key": "ctrl+down",
         "command": "cursorMove",
@@ -33,38 +71,51 @@
             "select": true
         }
     },
+    // tab : remove AI (so that it's a "safe" key)
     {
-        "key": "alt+left",
-        "command": "cursorMove",
-        "when": "editorTextFocus",
-        "args": {
-            "to": "wrappedLineStart"
-        }
+        "key": "tab",
+        "command": "-geminicodeassist.nextEdit.startSession",
+        "when": "authLoggedIn && config.geminicodeassist.enable && editorTextFocus && nextEditSessionAvailable"
     },
     {
-        "key": "alt+right",
-        "command": "cursorMove",
-        "when": "editorTextFocus",
-        "args": {
-            "to": "wrappedLineEnd"
-        }
+        "key": "tab",
+        "command": "-geminicodeassist.nextEdit.acceptSuggestion",
+        "when": "authLoggedIn && config.geminicodeassist.enable && editorTextFocus && nextEditSessionActive"
     },
     {
-        "key": "alt+shift+left",
-        "command": "cursorMove",
-        "when": "editorTextFocus",
-        "args": {
-            "to": "wrappedLineStart",
-            "select": true
-        }
+        "key": "tab",
+        "command": "-editor.action.inlineSuggest.commit",
+        "when": "inlineEditIsVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
     },
     {
-        "key": "alt+shift+right",
-        "command": "cursorMove",
-        "when": "editorTextFocus",
-        "args": {
-            "to": "wrappedLineEnd",
-            "select": true
-        }
+        "key": "tab",
+        "command": "-editor.action.inlineSuggest.commit",
+        "when": "inInlineEditsPreviewEditor"
+    },
+    // insert : AI-related stuff
+    {
+        "key": "insert",
+        "command": "geminicodeassist.nextEdit.startSession",
+        "when": "authLoggedIn && config.geminicodeassist.enable && editorTextFocus && nextEditSessionAvailable"
+    },
+    {
+        "key": "insert",
+        "command": "geminicodeassist.nextEdit.acceptSuggestion",
+        "when": "authLoggedIn && config.geminicodeassist.enable && editorTextFocus && nextEditSessionActive"
+    },
+    {
+        "key": "insert",
+        "command": "editor.action.inlineSuggest.commit",
+        "when": "inlineEditIsVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+    },
+    {
+        "key": "insert",
+        "command": "editor.action.inlineSuggest.commit",
+        "when": "inInlineEditsPreviewEditor"
+    },
+    {
+        // remove that
+        "key": "insert",
+        "command": "-editor.action.toggleOvertypeInsertMode"
     }
 ]
