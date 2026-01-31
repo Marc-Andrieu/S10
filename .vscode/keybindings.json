@@ -1,5 +1,15 @@
+// jump word (and select)     : Ctrl + Left/Right (+ Shift) (native)
+// jump paragraph (and select): Ctrl + Up/Down (+ Shift)    (custom)
+// jump newline (and select)  : Alt + Left/Right (+ Shift)  (custom)
+// move line up/down          : Alt + Up/Down               (native)
+//
+// cancel all completions (Intellisense then AI): Esc    (native)
+// insert AI completion                         : Insert (custom)
+// insert IntelliSense completion               :    Tab (native but was overridden by AI)
+// Note: Enter is for newlines (native) exclusively (custom), (same for Tab but exception above), but that setting is in settings.json.
+// This means: AI reacts exclusively to Insert/Esc, IntelliSense exclusively to Tab/Esc, and Enter/Tab are safe keys.
 [
-    // Alt + Left/Right (+ Select) = jump newline (and select).
+    // Alt + Left/Right (+ Shift) = jump newline (and select).
     // Extends existing Ctrl + Left/Right (+ Shift) to lines
     {
         "key": "alt+left",

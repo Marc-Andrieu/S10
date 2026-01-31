@@ -1,10 +1,10 @@
 {
-    // disposition des widgets
+    // Widgets layout
     "chat.commandCenter.enabled": false,
     "window.menuBarVisibility": "compact",
     "workbench.activityBar.location": "top",
     "window.commandCenter": false,
-    // couleurs
+    // Colors
     "workbench.colorCustomizations": {
         "activityBar.background": "#000",
         "statusBar.background": "#000",
@@ -19,8 +19,17 @@
         "tab.inactiveBackground": "#000",
         "editorWhitespace.foreground": "#888"
     },
+    "indentRainbow.excludedLanguages": [],
+    "indentRainbow.colors": [
+        "rgba(0,0,255,0.15)",
+        "rgba(0,255,0,0.15)",
+        "rgba(255,0,0,0.15)",
+        "rgba(0,255,255,0.15)",
+        "rgba(255,0,255,0.15)",
+        "rgba(255,255,0,0.15)"
+    ],
     "terminal.integrated.minimumContrastRatio": 2.1,
-    // rendu du texte
+    // Text rendering (shape of text and cursor)
     "editor.fontLigatures": true,
     "editor.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
     "terminal.integrated.fontLigatures.enabled": true,
@@ -29,7 +38,7 @@
     "terminal.integrated.cursorStyleInactive": "line",
     "terminal.integrated.cursorBlinking": true,
     "terminal.integrated.cursorWidth": 2,
-    // écriture
+    // Writing DX (what happens when writing code)
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
@@ -41,12 +50,19 @@
     "editor.quickSuggestions": {
         "strings": true
     },
-    // disposition du terminal
+    "editor.acceptSuggestionOnEnter": "off",
+    // Restrict AI code suggestions
+    "geminicodeassist.inlineSuggestions.enableAuto": true,
+    "geminicodeassist.displayInlineContextHint": false,
+    "mdb.mcp.server": "autoStartDisabled",
+    "geminicodeassist.enableTelemetry": false,
+    "geminicodeassist.inlineSuggestions.suggestionSpeed": "Slow",
+    // Terminal layout
     "terminal.integrated.defaultProfile.windows": "Git Bash",
     "terminal.integrated.tabs.title": "${process}${separator}${task}",
     "terminal.integrated.smoothScrolling": true,
     "terminal.integrated.stickyScroll.maxLineCount": 2,
-    // suggestions du terminal
+    // Terminal suggestions
     "terminal.integrated.suggest.enabled": true,
     "terminal.integrated.suggest.quickSuggestions": {
         "commands": "off",
@@ -54,35 +70,74 @@
         "unknown": "off"
     },
     "terminal.integrated.suggest.insertTrailingSpace": true,
-    // language-specific
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "files.associations": {
-        "*.css": "tailwindcss",
-        "*.toml": "toml"
-    },
-    // extensions
-    "tailwind-fold.unfoldedTextOpacity": 0.8,
-    "tailwind-fold.autoFold": false,
+    "terminal.integrated.initialHint": false,
+    // i18n
     "i18n-ally.sourceLanguage": "fr",
     "i18n-ally.displayLanguage": "fr",
     "i18n-ally.translate.deepl.useFreeApiEntry": true,
     "i18n-ally.keystyle": "nested",
-    "evenBetterToml.formatter.allowedBlankLines": 1,
-    "indentRainbow.excludedLanguages": [],
-    "indentRainbow.colors": [
-        "rgba(0,0,255,0.15)",
-        "rgba(0,255,0,0.15)",
-        "rgba(255,0,0,0.15)",
-        "rgba(0,255,255,0.15)",
-        "rgba(255,0,255,0.15)",
-        "rgba(255,255,0,0.15)"
-    ],
-    "markdown-preview-github-styles.colorTheme": "dark",
-    "markdown-preview-github-styles.darkTheme": "dark_high_contrast",
-    "geminicodeassist.inlineSuggestions.enableAuto": true,
-    "geminicodeassist.displayInlineContextHint": false,
+    // Others
+    "security.workspace.trust.untrustedFiles": "open",
+    "remote.SSH.remotePlatform": {},
+    // Language-specific below (alphabetical order):
+    "files.associations": {
+        "*.css": "tailwindcss",
+        "*.toml": "toml"
+    },
+    // Binary
     "hexeditor.columnWidth": 16,
     "hexeditor.showDecodedText": true,
     "hexeditor.defaultEndianness": "little",
-    "hexeditor.inspectorType": "aside"
+    "hexeditor.inspectorType": "aside",
+    // C++
+    "C_Cpp.default.compilerPath": "c:\\msys64\\ucrt64\\bin\\g++.exe",
+    // Dart & Flutter
+    "dart.flutterSdkPath": "C:\\Users\\marca\\flutter\\flutter",
+    "dart.debugExternalPackageLibraries": true,
+    "dart.debugSdkLibraries": false,
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [80],
+        "editor.selectionHighlight": false,
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": "off"
+    },
+    // diff
+    "diffEditor.codeLens": true,
+    // Docker
+    "containers.containerClient": "com.microsoft.visualstudio.containers.docker",
+    "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.dockercompose",
+    // Markdown
+    "markdown-preview-github-styles.colorTheme": "dark",
+    "markdown-preview-github-styles.darkTheme": "dark_high_contrast",
+    // Matlab
+    "terminal.integrated.commandsToSkipShell": ["matlab.interrupt"],
+    // Python
+    "python.defaultInterpreterPath": "C:\\Users\\marca\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "python.languageServer": "None", // ty
+    // Tailwind CSS
+    "tailwind-fold.unfoldedTextOpacity": 0.8,
+    "tailwind-fold.autoFold": false,
+    // TOML
+    "evenBetterToml.formatter.allowedBlankLines": 1,
+    // TypeScript
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    // Zig
+    "zig.zls.enabled": "on",
+    "[zig]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "ziglang.vscode-zig",
+        "editor.stickyScroll.defaultModel": "foldingProviderModel",
+        "files.eol": "\n",
+        "editor.suggest.insertMode": "replace",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.prettier": "explicit",
+            "source.organizeLinkDefinitions": "explicit",
+            "source.sort.json": "explicit"
+        },
+        "editor.semanticHighlighting.enabled": true,
+        "editor.suggest.showDeprecated": true
+    }
+    // Not yet sorted below:
 }
