@@ -53,8 +53,23 @@ Loi AGEC (Anti-Gaspi & Eco Circulaire) de 2020.
     - Ca se ft remplacer par un indice de durabilité
 - Loi REEN (Réduire l'Empreinte Environnementale de Numérique) de 2021.
 
-"Ecoconception web, les 115 bonnes pratiques" de Frédéric Bordage, c un bouquin.
+[Ecoconception web, les 115 bonnes pratiques](https://github.com/cnumr/best-practices) de Frédéric Bordage, c un bouquin.
+
+Alors les impacts sur leur dashboard sont incroyables frr, vitesse amélio,
 
 ## Exemples ds l'ep
 
+Fonctionnement d'un Data Center : bon j'ai fait 1 (+ 1) stage(s) ds un Data Center donc rien de spécial à noter
+
 ## & après ?
+
+- Inclusivité...
+- Accessibilité numérique du consortium W3C (ah ça c bcp + intéressant)
+
+Sah alors Ggl & MS "voient leurs émissions de $CO_2$ bondir à cause de l'IA" naaaaan j'm'y attendais po.
+
+Ce qui ft exploser les émissions énergétiques, c les cryptomonnaies (par construction, faut miner) et l'IA.
+
+EU AI Act : Août 2024.
+
+IA pr optimiser les trajets, la maintenance prédictive, et ...
