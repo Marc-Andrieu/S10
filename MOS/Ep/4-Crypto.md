@@ -1,4 +1,4 @@
-# MFA
+# MFA (conf 1/2)
 
 ## Concl
 
@@ -39,3 +39,24 @@ Pr éviter les bugs bêtes.
 
 Accessibilité : c la base.
 MDN.
+
+# _Le S de HTTPS_ - Paris Web 2025 (conf 2/2)
+
+SSL : obsolète.
+TLS <= 1.2 : obsolète.
+
+HTTPS = HTTP avec TLS (Transport Secure Layer)
+
+Passer un site sur le Mozilla Observatory et cryptcheck.fr.
+
+Encore merci à Let's Encrypt d'exister, mm si c américain.
+
+Les algos sont _publics_, les clefs sont _secrètes_ : oui c quand même assez évident qu'un algo secret = algo pas ouf.
+
+ECDH : _Elliptic-Curve Diffie-Hellman_
+
+Allez on revoit l'addition sur des courbes elliptiques réelles, la division euclidienne de polyn, etc.
+
+Certficats.
+Avant 2016 ct la merde, depuis 2016 le HTTPS est là par défaut donc on n'a plus les erreurs un peu partout sur Internet de certificat SSL expiré ou auto-signé.
+DV (Domain Validation), OV (Organization Validation), EV (Extended Validation)
