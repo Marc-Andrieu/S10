@@ -1,6 +1,6 @@
 {
     // Widgets layout
-    "chat.commandCenter.enabled": false,
+    //"chat.commandCenter.enabled": false,
     "window.menuBarVisibility": "compact",
     "workbench.activityBar.location": "top",
     "window.commandCenter": false,
@@ -17,7 +17,9 @@
         "input.background": "#222",
         "editorGroupHeader.tabsBackground": "#000",
         "tab.inactiveBackground": "#000",
-        "editorWhitespace.foreground": "#888"
+        "editorWhitespace.foreground": "#888",
+        "peekViewEditor.background": "#000",
+        "peekViewResult.background": "#000"
     },
     "indentRainbow.excludedLanguages": [],
     "indentRainbow.colors": [
@@ -78,11 +80,12 @@
     "i18n-ally.keystyle": "nested",
     // Others
     "security.workspace.trust.untrustedFiles": "open",
-    "remote.SSH.remotePlatform": {},
+    "liveServer.settings.port": 3000,
     // Language-specific below (alphabetical order):
     "files.associations": {
         "*.css": "tailwindcss",
-        "*.toml": "toml"
+        "*.toml": "toml",
+        "Caddyfile": "ruby"
     },
     // Binary
     "hexeditor.columnWidth": 16,
@@ -108,6 +111,10 @@
     // Docker
     "containers.containerClient": "com.microsoft.visualstudio.containers.docker",
     "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.dockercompose",
+    // Java
+    "redhat.telemetry.enabled": false,
+    "java.referencesCodeLens.enabled": true,
+    "java.implementationCodeLens": "all",
     // Markdown
     "markdown-preview-github-styles.colorTheme": "dark",
     "markdown-preview-github-styles.darkTheme": "dark_high_contrast",
@@ -138,6 +145,9 @@
         },
         "editor.semanticHighlighting.enabled": true,
         "editor.suggest.showDeprecated": true
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+        // Not yet sorted below:
     }
-    // Not yet sorted below:
 }
