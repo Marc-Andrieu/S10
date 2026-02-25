@@ -104,6 +104,24 @@ La strat du SI est définie avc :
 
 ## Modèle de réf de l'urbaniste
 
+3 vues :
+
+- Processus
+    - Fam de processus
+    - Processus
+    - Acti
+    - Tâche
+- Fns
+    - Zone
+    - Quartier
+    - Îlot
+    - Brique
+- Apps
+    - ...
+    - ...
+    - ...
+    - ...
+
 ### Carte des processus
 
 Après une série d'interviews de différents acteurs de l'entreprise ds divers départements & services
@@ -129,6 +147,40 @@ Zone d'échange : acquisition & restitution
 
 ### Carte applicative
 
+Recense l'ens des apps informatiques
+
+Niveaux :
+
+- sys applicatif
+- apps
+- module
+- composant
+- classe/fn
+
 ### Carte physique
 
+Niveaux
+
+### Merise (?)
+
+- Merise distingue données (db) et traitement
+
+Urbanisme $\neq$ Merise
+
 ## L'indice d'urbanisation
+
+Axes :
+
+1. ...
+1. ...
+1. Avoir des cibles pr l'évolution du SI
+1. Ma^triser une construction du SI optimale
+1. maîtriser la complexité des flux d'&change d'information
+
+## Acteurs
+
+- DSI
+- Responsable du domaine fn-el
+- Responsable de projet
+- Architecte technique
+- Urbaniste
